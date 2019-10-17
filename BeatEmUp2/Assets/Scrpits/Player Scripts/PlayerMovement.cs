@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
         RotatePlayer();
         AnimatePlayerWalk();
-        AnimatePlayerAttack();
+       
 	}
 
     void FixedUpdate()
@@ -61,15 +61,5 @@ public class PlayerMovement : MonoBehaviour {
             playerAnim.Walk(false);
         }
     }
-    void AnimatePlayerAttack()
-    {
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            playerAnim.Punch1();
-        }
-        else if(Input.GetKeyDown(KeyCode.K))
-        {
-            playerAnim.Punch2();
-        }
-    }
+   
 }
