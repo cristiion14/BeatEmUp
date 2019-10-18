@@ -65,11 +65,35 @@ public class PlayerAttack : MonoBehaviour
 
 
             }
-            if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            //return because no combos to perform
+            if (currentComboState == ComboState.KICK_2 || currentComboState == ComboState.PUNCH_3)
+                return;
+            //start the combo
+            if (currentComboState == ComboState.NONE || currentComboState == ComboState.PUNCH_1 || currentComboState == ComboState.PUNCH_2)
             {
-                playerAnim.Kick1(); //1.25.45 YT
+                currentComboState = ComboState.KICK_1;
+            }
+            //go to next state 
+            else if (currentComboState == ComboState.KICK_1)
+            {
+                currentComboState++;
+            }
+            activateTimerToReset = true;
+            currentComboTimer = defaultComboTimer;
+            switch(currentComboState)
+            {
+                case ComboState.KICK_1:
+                    playerAnim.Kick1(); //1.25.45 YT
+                    break;
+                case ComboState.KICK_2:
+                    playerAnim.Kick2();
+                    break;
             }
         }
+
+    }
 
     void ResetComboState()
     {
