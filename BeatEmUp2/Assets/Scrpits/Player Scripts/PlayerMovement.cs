@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (other.collider.name == Tags.ENEMY_TAG)
         {
-            Instantiate(GetComponentInChildren<PlayerAttack>().punchSystem, GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
+            Instantiate(GetComponentInChildren<PlayerAttack>().punchSystem, new Vector3(other.GetContact(0).point.x, other.GetContact(0).point.y, other.GetContact(0).point.z), Quaternion.identity);   //GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
             Debug.LogError("INSTANTIAZA");
 
         }

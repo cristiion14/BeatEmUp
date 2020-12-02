@@ -14,7 +14,12 @@ public enum ComboState
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject punchSystem;
+    /*
     public Transform leftPunch;
+    public Transform rightPunch;
+    public Transform leftKick;
+    public Transform rightKick;
+    */
 
     CharacterAnimation playerAnim;
     bool activateTimerToReset;
