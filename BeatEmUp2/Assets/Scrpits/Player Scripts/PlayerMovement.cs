@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         
     }
-
+   
     void AnimatePlayerWalk()
     {                   //if the player moves in either position ---> call animation
         if(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) != 0 || Input.GetAxisRaw(Axis.VERTICAL_AXIS) !=0)
@@ -61,5 +61,17 @@ public class PlayerMovement : MonoBehaviour {
             playerAnim.Walk(false);
         }
     }
+
+    void OnCollisionEnter(Collision other)
+    {
    
+
+        if (other.collider.name == Tags.ENEMY_TAG)
+        {
+            Instantiate(GetComponentInChildren<PlayerAttack>().punchSystem, GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
+            Debug.LogError("INSTANTIAZA");
+
+        }
+    }
+
 }

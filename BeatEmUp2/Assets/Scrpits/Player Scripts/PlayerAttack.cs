@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public enum ComboState
 {
     NONE,
@@ -12,6 +13,9 @@ public enum ComboState
 }
 public class PlayerAttack : MonoBehaviour
 {
+    public GameObject punchSystem;
+    public Transform leftPunch;
+
     CharacterAnimation playerAnim;
     bool activateTimerToReset;
     float defaultComboTimer = 0.4f;
@@ -35,7 +39,6 @@ public class PlayerAttack : MonoBehaviour
     {
         AnimatePlayerAttack();
         ResetComboState();
-
     }
 
     void AnimatePlayerAttack()
@@ -62,7 +65,6 @@ public class PlayerAttack : MonoBehaviour
                         break;
                     
                 }
-
 
             }
         if (Input.GetKeyDown(KeyCode.K))
@@ -110,5 +112,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
     }
+
+ 
 }
 
