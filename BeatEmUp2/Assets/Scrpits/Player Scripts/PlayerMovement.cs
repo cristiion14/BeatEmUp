@@ -30,7 +30,10 @@ public class PlayerMovement : MonoBehaviour {
     void FixedUpdate()
     {
         //any phisics calculations goes in here
-        DetectMov();
+        if (!GetComponentInChildren<PlayerAttack>().isPunching && !GetComponentInChildren<PlayerAttack>().isKicking)
+        {
+            DetectMov();
+        }
     }
     void DetectMov()
     {
