@@ -37,5 +37,8 @@ public class CharacterAnimation : MonoBehaviour {
         anim.SetTrigger(AnimationTags.KICK_2_TRIGGER);
     }
    
-
+    public void Jump()
+    {
+        anim.SetTrigger(AnimationTags.JUMP_TRIGGER);
+    }
 }

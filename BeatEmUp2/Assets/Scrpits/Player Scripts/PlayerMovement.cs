@@ -7,8 +7,13 @@ public class PlayerMovement : MonoBehaviour {
     //animator reference
     private CharacterAnimation playerAnim;
     private Rigidbody rb;
+
+    public LayerMask groundMask;
+    public Transform groundCheck;
+    public  bool isGrounded = true;
     public float walkSpeed = 2f;
     public float zSpeed = 1.5f;
+    float jumpForce = 10f;
 
     private float rotationY = -90f;
     private float rotationSpeed = 15f;
@@ -24,8 +29,9 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
         RotatePlayer();
         AnimatePlayerWalk();
-       
-	}
+
+
+    }
 
     void FixedUpdate()
     {
@@ -34,11 +40,20 @@ public class PlayerMovement : MonoBehaviour {
         {
             DetectMov();
         }
+
     }
     void DetectMov()
     {
         rb.velocity = new Vector3(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) * (-walkSpeed), rb.velocity.y, Input.GetAxisRaw(Axis.VERTICAL_AXIS) * (-zSpeed));
+
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            GetComponentInChildren<PlayerAttack>().playerAnim.Jump();
+            rb.AddForce(new Vector3(0, 1 , 0) * jumpForce,  ForceMode.Impulse);
+            isGrounded = false;
+        }
     }
+
 
     void RotatePlayer()
     {                 //if is moving to the right
@@ -88,7 +103,8 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-   
+        if (other.collider.tag == Tags.GROUND_TAG)
+            isGrounded = true;
 
         if (other.collider.name == Tags.ENEMY_TAG)
         {
@@ -96,6 +112,11 @@ public class PlayerMovement : MonoBehaviour {
             Debug.LogError("INSTANTIAZA");
 
         }
+    }
+
+    void OnCollisionStay()
+    {
+        isGrounded = true;
     }
 
 }

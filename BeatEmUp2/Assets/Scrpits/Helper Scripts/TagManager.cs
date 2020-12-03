@@ -22,6 +22,8 @@ public class AnimationTags : MonoBehaviour {
     public const string STAND_UP_TRIGGER = "StandUp";
     public const string HIT_TRIGGER = "Hit";
     public const string DEATH_TRIGGER = "Death";
+
+    public const string JUMP_TRIGGER = "Jump";
 }
 
 public class Axis

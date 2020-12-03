@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
     bool hasPressedKickKeyUp = false;
 
 
-    CharacterAnimation playerAnim;
+   public CharacterAnimation playerAnim;
     bool activateTimerToReset;
     float defaultComboTimer = 0.4f;
     float currentComboTimer;
