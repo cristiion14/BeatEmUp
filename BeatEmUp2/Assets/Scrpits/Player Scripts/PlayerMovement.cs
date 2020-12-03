@@ -47,9 +47,30 @@ public class PlayerMovement : MonoBehaviour {
         {            //if going to the left
             transform.rotation = Quaternion.Euler(0f, Mathf.Abs(rotationY), 0);
         }
-        
+
+        if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0)
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) > 0)
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) > 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
+            transform.rotation = Quaternion.Euler(0, -135, 0);
+        else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) < 0)
+            transform.rotation = Quaternion.Euler(0, 135, 0);
+
+        if(Input.GetAxisRaw(Axis.VERTICAL_AXIS) > 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) < 0)
+            transform.rotation = Quaternion.Euler(0, -225, 0);
+       else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
+            transform.rotation = Quaternion.Euler(0, 225, 0);
+
+        if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
+            transform.rotation = Quaternion.Euler(0, -45, 0);
+        else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) < 0)
+            transform.rotation = Quaternion.Euler(0, 45, 0);
+
+
     }
-   
+
     void AnimatePlayerWalk()
     {                   //if the player moves in either position ---> call animation
         if(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) != 0 || Input.GetAxisRaw(Axis.VERTICAL_AXIS) !=0)
