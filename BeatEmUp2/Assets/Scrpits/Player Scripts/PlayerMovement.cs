@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     public float walkSpeed = 2f;
     public float zSpeed = 1.5f;
     float jumpForce = 10f;
+   
 
     private float rotationY = -90f;
     private float rotationSpeed = 15f;
@@ -51,7 +52,12 @@ public class PlayerMovement : MonoBehaviour {
             GetComponentInChildren<PlayerAttack>().playerAnim.Jump();
             rb.AddForce(new Vector3(0, 1 , 0) * jumpForce,  ForceMode.Impulse);
             isGrounded = false;
+
+
         }
+        if(GetComponentInChildren<PlayerAttack>().playerAnim.anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && transform.position.y <0.5f)
+            playerAnim.Land();
+
     }
 
 

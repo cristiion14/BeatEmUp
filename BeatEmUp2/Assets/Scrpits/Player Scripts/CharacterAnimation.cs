@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterAnimation : MonoBehaviour {
 
-    private Animator anim;
+    public Animator anim;
 	// Use this for initialization
 	void Awake()
     {
@@ -40,5 +40,10 @@ public class CharacterAnimation : MonoBehaviour {
     public void Jump()
     {
         anim.SetTrigger(AnimationTags.JUMP_TRIGGER);
+    }
+
+    public void Land()
+    {
+        anim.SetTrigger(AnimationTags.LAND_TRIGGER);
     }
 }

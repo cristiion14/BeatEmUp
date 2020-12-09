@@ -107,7 +107,7 @@ public class PlayerAttack : MonoBehaviour
             if (punchAttackTimer <= 1.5f)
                 isPunching = false;
         }
-        Debug.LogError("the attack timer is: " + punchAttackTimer);  
+       // Debug.LogError("the attack timer is: " + punchAttackTimer);  
         
 
         if (Input.GetKeyDown(KeyCode.K))

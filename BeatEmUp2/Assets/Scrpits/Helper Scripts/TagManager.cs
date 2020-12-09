@@ -24,6 +24,7 @@ public class AnimationTags : MonoBehaviour {
     public const string DEATH_TRIGGER = "Death";
 
     public const string JUMP_TRIGGER = "Jump";
+    public const string LAND_TRIGGER = "Land";
 }
 
 public class Axis
