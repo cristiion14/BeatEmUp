@@ -308,9 +308,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
-  m_LocalRotation: {x: 0, y: 0.99939084, z: -0.03489949, w: 0}
-  m_LocalPosition: {x: 6, y: 2.5, z: 4.42}
-  m_LocalScale: {x: 1.0000007, y: 1.0000001, z: 1.0000008}
+  m_LocalRotation: {x: -0, y: 0.99939084, z: -0.03489949, w: 0}
+  m_LocalPosition: {x: 6, y: 2.5, z: 4.420003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -391,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1427464531050736, guid: 20ca393cb4a610347b1ebac9bac36578, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1427464531050736, guid: 20ca393cb4a610347b1ebac9bac36578, type: 3}
       propertyPath: m_TagString
@@ -610,7 +610,7 @@ PrefabInstance:
         type: 3}
       propertyPath: groundCheck
       value: 
-      objectReference: {fileID: 1487590627}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54d89dc6996cab48be839638ea2f701, type: 3}
 --- !u!4 &1155579015 stripped
@@ -650,36 +650,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.33953178, y: 0.08923235, z: 0.12825708}
   m_Center: {x: -0.001285487, y: 0.030000022, z: -0.010000015}
---- !u!1 &1487590626
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1487590627}
-  m_Layer: 0
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1487590627
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487590626}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.108, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1155579015}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1515675065
 PrefabInstance:
   m_ObjectHideFlags: 0

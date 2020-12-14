@@ -25,6 +25,7 @@ public class AnimationTags : MonoBehaviour {
 
     public const string JUMP_TRIGGER = "Jump";
     public const string LAND_TRIGGER = "Land";
+    public const string RUN_TRIGGER = "Run";
 }
 
 public class Axis

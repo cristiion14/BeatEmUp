@@ -46,4 +46,9 @@ public class CharacterAnimation : MonoBehaviour {
     {
         anim.SetTrigger(AnimationTags.LAND_TRIGGER);
     }
+
+    public void Run()
+    {
+        anim.SetTrigger(AnimationTags.RUN_TRIGGER);
+    }
 }
