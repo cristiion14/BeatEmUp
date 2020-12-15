@@ -11,8 +11,11 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask groundMask;
     public Transform groundCheck;
     public  bool isGrounded = true;
-    public float walkSpeed = 2f;
-    public float zSpeed = 1.5f;
+
+    float initialSpeed = 2f;
+    float speed = 2f;
+    float acceleration = .5f;
+    float maxSpeed = 3.5f;
     float jumpForce =4.25f;
    
 
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<CharacterAnimation>();
+        speed = initialSpeed;
     }
 	
 	// Update is called once per frame
@@ -44,43 +48,59 @@ public class PlayerMovement : MonoBehaviour {
 
     }
     bool isRunningOnX = false;
+    bool isRunningonY = false;
+
     void DetectMov()
     {
-        
-        rb.velocity = new Vector3(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) * (-walkSpeed), rb.velocity.y, Input.GetAxisRaw(Axis.VERTICAL_AXIS) * (-zSpeed));
+        if (speed > maxSpeed)
+            speed = maxSpeed;
+
+        rb.velocity = new Vector3(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) * (-speed), rb.velocity.y, Input.GetAxisRaw(Axis.VERTICAL_AXIS) * (-speed));
 
       //  Debug.LogError("THE SPEED ON X IS: " + Input.GetAxis(Axis.HORIZONTAL_AXIS) + "\n" + "THE SPEED ON THE Y IS: " + Input.GetAxis(Axis.VERTICAL_AXIS));
 
         //run anim on X
+        /*
         if (Input.GetAxis(Axis.HORIZONTAL_AXIS) > .5f || Input.GetAxis(Axis.HORIZONTAL_AXIS) <-.5f)
         {
             playerAnim.anim.SetBool("Run", true);
-            walkSpeed += .05F;
+            speed += .05F;
             isRunningOnX = true;
+            isRunningonY = false;
         }
 
-       else
-        {
-            walkSpeed = 2;
-            playerAnim.anim.SetBool("Run", false);
-            isRunningOnX = false;
-        }
-
-        // run anim on the y
-        if (Input.GetAxis(Axis.VERTICAL_AXIS) > .5f || Input.GetAxis(Axis.VERTICAL_AXIS) <-.5f)
+        else if (Input.GetAxis(Axis.VERTICAL_AXIS) > .5f || Input.GetAxis(Axis.VERTICAL_AXIS) < -.5f)
         {
             playerAnim.anim.SetBool("Run", true);
-            zSpeed += .05F;
+            speed += .05F;
+            isRunningonY = true;
+            isRunningOnX = false;
         }
-
-        else if(!isRunningOnX)
+        else
         {
-            zSpeed = 1.5F;
             playerAnim.anim.SetBool("Run", false);
+            speed = 2f;
+            isRunningOnX = false;
+            isRunningonY = false;
         }
+        */
 
-
-
+        if((Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0) ||
+            Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)<0  ||
+            Input.GetAxisRaw(Axis.VERTICAL_AXIS)<0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0  ||
+            Input.GetAxisRaw(Axis.VERTICAL_AXIS)<0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)<0  ||
+            Input.GetAxis(Axis.HORIZONTAL_AXIS) >.5f || Input.GetAxis(Axis.HORIZONTAL_AXIS) <-.5f ||
+            Input.GetAxis(Axis.VERTICAL_AXIS) >.5f || Input.GetAxis(Axis.VERTICAL_AXIS) <-.5f && speed<maxSpeed)
+        {
+            playerAnim.anim.SetBool("Run", true);
+            speed += acceleration * Time.deltaTime;
+        }
+        else
+        {
+            playerAnim.anim.SetBool("Run", false);
+            speed = initialSpeed;
+        }
+        
         //Jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -89,7 +109,7 @@ public class PlayerMovement : MonoBehaviour {
             vel.y = 0f;
             rb.velocity = vel;
 
-            //jump
+            //jump 
             GetComponentInChildren<PlayerAttack>().playerAnim.Jump();
             rb.AddForce(new Vector3(0,jumpForce,0), ForceMode.VelocityChange);
             isGrounded = false;
@@ -113,21 +133,25 @@ public class PlayerMovement : MonoBehaviour {
             transform.rotation = Quaternion.Euler(0f, Mathf.Abs(rotationY), 0);
         }
 
+
         if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0)
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) > 0)
             transform.rotation = Quaternion.Euler(0, 180, 0);
 
+        //top right
         if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) > 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
             transform.rotation = Quaternion.Euler(0, -135, 0);
         else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) < 0)
             transform.rotation = Quaternion.Euler(0, 135, 0);
 
+        //top left
         if(Input.GetAxisRaw(Axis.VERTICAL_AXIS) > 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) < 0)
             transform.rotation = Quaternion.Euler(0, -225, 0);
        else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
             transform.rotation = Quaternion.Euler(0, 225, 0);
 
+        //down right
         if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
             transform.rotation = Quaternion.Euler(0, -45, 0);
         else if (Input.GetAxisRaw(Axis.VERTICAL_AXIS) < 0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) < 0)
