@@ -14,13 +14,6 @@ public enum ComboState
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject punchSystem;
-    /*
-    public Transform leftPunch;
-    public Transform rightPunch;
-    public Transform leftKick;
-    public Transform rightKick;
-    */
-
     public bool isPunching = false;
     public bool isKicking = false;
 
@@ -31,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     bool hasPressedKickKeyUp = false;
 
 
-   public CharacterAnimation playerAnim;
+    public CharacterAnimation playerAnim;
     bool activateTimerToReset;
     float defaultComboTimer = 0.4f;
     float currentComboTimer;
@@ -54,9 +47,14 @@ public class PlayerAttack : MonoBehaviour
     {
         AnimatePlayerAttack();
         ResetComboState();
+        Defend();
     }
 
-
+    void Defend()
+    {
+        if (Input.GetKey(KeyCode.Q))
+            playerAnim.Defend();
+    }
 
     void AnimatePlayerAttack()
     {
@@ -92,7 +90,6 @@ public class PlayerAttack : MonoBehaviour
                         isPunching = true;
                         playerAnim.Punch3();
                         break;
-                    
                 }
             }
        
@@ -107,8 +104,18 @@ public class PlayerAttack : MonoBehaviour
             if (punchAttackTimer <= 1.5f)
                 isPunching = false;
         }
-       // Debug.LogError("the attack timer is: " + punchAttackTimer);  
-        
+
+        //Ground Punch
+        if (Input.GetKeyDown(KeyCode.Z))
+            playerAnim.GroundPunch();
+
+        //Ground Kick
+        if (Input.GetKeyDown(KeyCode.X))
+            playerAnim.GroundKick();
+
+        //Jump Kick
+        if (Input.GetKeyDown(KeyCode.C))
+            playerAnim.JumpKick();
 
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -162,7 +169,6 @@ public class PlayerAttack : MonoBehaviour
             if (kickAttackTimer <= 1.5f)
                isKicking = false;
         }
-        
     }
 
     void ResetComboState()
@@ -178,9 +184,6 @@ public class PlayerAttack : MonoBehaviour
                 currentComboTimer = defaultComboTimer;
             }
         }
-
     }
-
- 
 }
 

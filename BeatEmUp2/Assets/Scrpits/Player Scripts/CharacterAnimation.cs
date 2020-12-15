@@ -36,6 +36,11 @@ public class CharacterAnimation : MonoBehaviour {
     {
         anim.SetTrigger(AnimationTags.KICK_2_TRIGGER);
     }
+
+    public void GroundKick()
+    {
+        anim.SetTrigger(AnimationTags.GROUND_KICK);
+    }
    
     public void Jump()
     {
@@ -50,5 +55,20 @@ public class CharacterAnimation : MonoBehaviour {
     public void Run()
     {
         anim.SetTrigger(AnimationTags.RUN_TRIGGER);
+    }
+
+    public void Defend()
+    {
+        anim.SetTrigger(AnimationTags.DEFEND_TRIGGER);
+    }
+
+    public void GroundPunch()
+    {
+        anim.SetTrigger(AnimationTags.GROUND_PUNCH);
+    }
+
+    public void JumpKick()
+    {
+        anim.SetTrigger(AnimationTags.JUMP_KICK);
     }
 }

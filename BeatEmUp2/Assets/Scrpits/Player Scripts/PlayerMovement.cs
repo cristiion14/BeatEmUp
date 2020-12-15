@@ -8,14 +8,22 @@ public class PlayerMovement : MonoBehaviour {
     private CharacterAnimation playerAnim;
     private Rigidbody rb;
 
+    public Collider isGround;
+
     public LayerMask groundMask;
     public Transform groundCheck;
     public  bool isGrounded = true;
 
+    [SerializeField]
     float initialSpeed = 2f;
-    float speed = 2f;
+
+    float speed;
     float acceleration = .5f;
+
+    [SerializeField]
     float maxSpeed = 3.5f;
+
+    [SerializeField]
     float jumpForce =4.25f;
    
 
@@ -52,39 +60,14 @@ public class PlayerMovement : MonoBehaviour {
 
     void DetectMov()
     {
+        //clamp the speed
         if (speed > maxSpeed)
             speed = maxSpeed;
 
+        //move the player
         rb.velocity = new Vector3(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) * (-speed), rb.velocity.y, Input.GetAxisRaw(Axis.VERTICAL_AXIS) * (-speed));
 
-      //  Debug.LogError("THE SPEED ON X IS: " + Input.GetAxis(Axis.HORIZONTAL_AXIS) + "\n" + "THE SPEED ON THE Y IS: " + Input.GetAxis(Axis.VERTICAL_AXIS));
-
-        //run anim on X
-        /*
-        if (Input.GetAxis(Axis.HORIZONTAL_AXIS) > .5f || Input.GetAxis(Axis.HORIZONTAL_AXIS) <-.5f)
-        {
-            playerAnim.anim.SetBool("Run", true);
-            speed += .05F;
-            isRunningOnX = true;
-            isRunningonY = false;
-        }
-
-        else if (Input.GetAxis(Axis.VERTICAL_AXIS) > .5f || Input.GetAxis(Axis.VERTICAL_AXIS) < -.5f)
-        {
-            playerAnim.anim.SetBool("Run", true);
-            speed += .05F;
-            isRunningonY = true;
-            isRunningOnX = false;
-        }
-        else
-        {
-            playerAnim.anim.SetBool("Run", false);
-            speed = 2f;
-            isRunningOnX = false;
-            isRunningonY = false;
-        }
-        */
-
+        //acceleration
         if((Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0) ||
             Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)<0  ||
             Input.GetAxisRaw(Axis.VERTICAL_AXIS)<0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0  ||
@@ -92,11 +75,13 @@ public class PlayerMovement : MonoBehaviour {
             Input.GetAxis(Axis.HORIZONTAL_AXIS) >.5f || Input.GetAxis(Axis.HORIZONTAL_AXIS) <-.5f ||
             Input.GetAxis(Axis.VERTICAL_AXIS) >.5f || Input.GetAxis(Axis.VERTICAL_AXIS) <-.5f && speed<maxSpeed)
         {
+            //run and increase speed
             playerAnim.anim.SetBool("Run", true);
             speed += acceleration * Time.deltaTime;
         }
         else
         {
+            //disable running anim and set the speed to default value
             playerAnim.anim.SetBool("Run", false);
             speed = initialSpeed;
         }
@@ -109,15 +94,18 @@ public class PlayerMovement : MonoBehaviour {
             vel.y = 0f;
             rb.velocity = vel;
 
-            //jump 
+            //play jump animation and make the player jump 
             GetComponentInChildren<PlayerAttack>().playerAnim.Jump();
             rb.AddForce(new Vector3(0,jumpForce,0), ForceMode.VelocityChange);
             isGrounded = false;
         }
 
         //Land anim
-        if(GetComponentInChildren<PlayerAttack>().playerAnim.anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && transform.position.y <0.5f)
+        if (GetComponentInChildren<PlayerAttack>().playerAnim.anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && transform.position.y < 0.5f)
+        {
+            isGrounded = true;
             playerAnim.Land();
+        }
 
     }
 
@@ -180,17 +168,23 @@ public class PlayerMovement : MonoBehaviour {
             Debug.LogError("INSTANTIAZA");
 
         }
-    }
 
-    void OnCollisionStay()
-    {
-        isGrounded = true;
+        if (other.collider.tag == Tags.GROUND_TAG)
+            isGrounded = true;
+
     }
 
     void OnCollisionExit(Collision other)
     {
-        if (other.collider.tag == "Ground")
+        if (other.collider.tag == Tags.GROUND_TAG)
             isGrounded = false;
+
     }
+
+    void OnCollisionStay()
+    {
+      //  isGrounded = true;
+    }
+
 
 }
