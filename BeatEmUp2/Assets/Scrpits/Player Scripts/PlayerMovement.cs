@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     float jumpForce =4.25f;
 
-    public TMPro.TextMeshProUGUI speedTXT;
 
     private float rotationY = -90f;
     private float rotationSpeed = 15f;
@@ -53,7 +52,6 @@ public class PlayerMovement : MonoBehaviour {
         RotatePlayer();
         AnimatePlayerWalk();
 
-        speedTXT.text = speed.ToString();
 
     //    isGrounded = Physics.CheckSphere(groundCheck.position, .2f, groundMask);
 
@@ -201,10 +199,11 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (other.collider.name == Tags.ENEMY_TAG)
         {
-            Instantiate(GetComponentInChildren<PlayerAttack>().punchSystem, new Vector3(other.GetContact(0).point.x, other.GetContact(0).point.y, other.GetContact(0).point.z), Quaternion.identity);   //GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
+            Instantiate(GetComponentInChildren<PlayerAttack>().hitEffect, new Vector3(other.GetContact(0).point.x, other.GetContact(0).point.y, other.GetContact(0).point.z), Quaternion.identity);   //GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
             Debug.LogError("INSTANTIAZA");
-
         }
+
+
     }
 
     void OnCollisionExit(Collision other)

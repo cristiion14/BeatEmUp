@@ -13,9 +13,15 @@ public enum ComboState
 }
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject punchSystem;
+    public GameObject hitEffect;
     public bool isPunching = false;
     public bool isKicking = false;
+
+    bool leftPunchHit = false;
+    bool rightKickHit = false;
+    public Transform leftPunch;
+    public Transform rightKick;
+   public GameObject dustEffectLand;
 
     float punchAttackTimer = 2f;
     bool hasPressedPunchKeyUp = false;
@@ -107,11 +113,19 @@ public class PlayerAttack : MonoBehaviour
 
         //Ground Punch
         if (Input.GetKeyDown(KeyCode.Z))
+        {
+            leftPunchHit = true;
+            rightKickHit = false;
             playerAnim.GroundPunch();
+        }
 
         //Ground Kick
         if (Input.GetKeyDown(KeyCode.X))
+        {
+            rightKickHit = true;
+            leftPunchHit = false;
             playerAnim.GroundKick();
+        }
 
         //Jump Kick
         if (Input.GetKeyDown(KeyCode.C))
@@ -185,5 +199,16 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+
+    void ShowDustEffectLand()
+    {
+        if (leftPunchHit)
+            Instantiate(dustEffectLand, leftPunch);
+        else
+            Instantiate(dustEffectLand, rightKick);
+            
+    }
+
+  
 }
 
