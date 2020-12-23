@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -18,14 +19,16 @@ public class PlayerMovement : MonoBehaviour {
     float initialSpeed = 2f;
 
     float speed;
-    float acceleration = .5f;
+    float acceleration = 50f;
+    bool canIncreaseAcc = false;
 
     [SerializeField]
     float maxSpeed = 3.5f;
 
     [SerializeField]
     float jumpForce =4.25f;
-   
+
+    public TMPro.TextMeshProUGUI speedTXT;
 
     private float rotationY = -90f;
     private float rotationSpeed = 15f;
@@ -43,6 +46,8 @@ public class PlayerMovement : MonoBehaviour {
         RotatePlayer();
         AnimatePlayerWalk();
 
+        speedTXT.text = speed.ToString();
+
         Debug.LogError("Is grounded: " + isGrounded);
     }
 
@@ -58,6 +63,7 @@ public class PlayerMovement : MonoBehaviour {
     bool isRunningOnX = false;
     bool isRunningonY = false;
 
+    char c = 'a';
     void DetectMov()
     {
         //clamp the speed
@@ -65,10 +71,11 @@ public class PlayerMovement : MonoBehaviour {
             speed = maxSpeed;
 
         //move the player
-        rb.velocity = new Vector3(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) * (-speed), rb.velocity.y, Input.GetAxisRaw(Axis.VERTICAL_AXIS) * (-speed));
+        rb.velocity = new Vector3(Input.GetAxis(Axis.HORIZONTAL_AXIS) * (-speed), rb.velocity.y, Input.GetAxis(Axis.VERTICAL_AXIS) * (-speed));
+
 
         //acceleration
-        if((Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0) ||
+        if ((Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0) ||          
             Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)<0  ||
             Input.GetAxisRaw(Axis.VERTICAL_AXIS)<0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0  ||
             Input.GetAxisRaw(Axis.VERTICAL_AXIS)<0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)<0  ||
@@ -77,15 +84,26 @@ public class PlayerMovement : MonoBehaviour {
         {
             //run and increase speed
             playerAnim.anim.SetBool("Run", true);
-            speed += acceleration * Time.deltaTime;
+            canIncreaseAcc = true;
+           // speed += acceleration * Time.deltaTime;
         }
         else
         {
             //disable running anim and set the speed to default value
             playerAnim.anim.SetBool("Run", false);
-            speed = initialSpeed;
+         //   speed = initialSpeed;
+            canIncreaseAcc = false;
         }
-        
+
+        Debug.LogError("can increase speed: " + canIncreaseAcc + " the speed is: " + speed);
+
+        //increase acceleration
+        if (canIncreaseAcc)
+            rb.AddForce(new Vector3(rb.velocity.x, 0, rb.velocity.y) * acceleration, ForceMode.Acceleration);
+        //  speed += acceleration * Time.deltaTime;
+        else
+            speed = initialSpeed;
+
         //Jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -97,6 +115,7 @@ public class PlayerMovement : MonoBehaviour {
             //play jump animation and make the player jump 
             GetComponentInChildren<PlayerAttack>().playerAnim.Jump();
             rb.AddForce(new Vector3(0,jumpForce,0), ForceMode.VelocityChange);
+
             isGrounded = false;
         }
 
