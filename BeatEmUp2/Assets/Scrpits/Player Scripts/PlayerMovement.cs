@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public Collider isGround;
 
+    float distToGround;
     public LayerMask groundMask;
     public Transform groundCheck;
     public  bool isGrounded = true;
@@ -40,6 +41,12 @@ public class PlayerMovement : MonoBehaviour {
         playerAnim = GetComponentInChildren<CharacterAnimation>();
         speed = initialSpeed;
     }
+
+    void Start()
+    {
+        //get the distance to the ground
+        distToGround = isGround.bounds.extents.y;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -48,7 +55,9 @@ public class PlayerMovement : MonoBehaviour {
 
         speedTXT.text = speed.ToString();
 
-        Debug.LogError("Is grounded: " + isGrounded);
+    //    isGrounded = Physics.CheckSphere(groundCheck.position, .2f, groundMask);
+
+        Debug.LogError("Is grounded: " + checkGround());
     }
 
     void FixedUpdate()
@@ -63,7 +72,17 @@ public class PlayerMovement : MonoBehaviour {
     bool isRunningOnX = false;
     bool isRunningonY = false;
 
-    char c = 'a';
+    bool checkGround()
+    {
+        RaycastHit raycastHit;
+
+        if (Physics.Raycast(isGround.transform.position, -isGround.transform.forward, out raycastHit, .5f))
+            return true;
+        else
+            return false;
+    }
+
+
     void DetectMov()
     {
         //clamp the speed
@@ -105,25 +124,24 @@ public class PlayerMovement : MonoBehaviour {
             speed = initialSpeed;
 
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && checkGround())
         {
-            //set the y value of the rb to 0 before jumping
+            //set the velocity of the rb on the Y axis to the jump value
             Vector3 vel = rb.velocity;
-            vel.y = 0f;
+            vel.y = jumpForce;
             rb.velocity = vel;
 
             //play jump animation and make the player jump 
             GetComponentInChildren<PlayerAttack>().playerAnim.Jump();
-            rb.AddForce(new Vector3(0,jumpForce,0), ForceMode.VelocityChange);
-
-            isGrounded = false;
         }
 
+
         //Land anim
-        if (GetComponentInChildren<PlayerAttack>().playerAnim.anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && transform.position.y < 0.5f)
+        //maybe try landing after jumping higher stuff
+
+        if (!checkGround() && rb.velocity.y < 0.5f)
         {
-            isGrounded = true;
-            playerAnim.Land();
+            //    playerAnim.Land();
         }
 
     }
@@ -187,16 +205,11 @@ public class PlayerMovement : MonoBehaviour {
             Debug.LogError("INSTANTIAZA");
 
         }
-
-        if (other.collider.tag == Tags.GROUND_TAG)
-            isGrounded = true;
-
     }
 
     void OnCollisionExit(Collision other)
     {
-        if (other.collider.tag == Tags.GROUND_TAG)
-            isGrounded = false;
+    
 
     }
 
