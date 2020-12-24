@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public enum ComboState
 {
     NONE,
@@ -13,6 +13,8 @@ public enum ComboState
 }
 public class PlayerAttack : MonoBehaviour
 {
+    PlayerControlls playerControls;
+
     public GameObject hitEffect;
     public bool isPunching = false;
     public bool isKicking = false;
@@ -37,8 +39,18 @@ public class PlayerAttack : MonoBehaviour
 
     ComboState currentComboState;
     // Use this for initialization
+
+    
+
     void Awake()
     {
+        //reference to the controller
+        playerControls = new PlayerControlls();
+
+        //controller actions
+        playerControls.Gameplay.Kick.performed += ctx => Kick1();
+        playerControls.Gameplay.Movement.performed += ctx => GetComponentInParent<PlayerMovement>().DetectMov();
+
         playerAnim = GetComponentInChildren<CharacterAnimation>();
     }
 
@@ -54,6 +66,17 @@ public class PlayerAttack : MonoBehaviour
         AnimatePlayerAttack();
         ResetComboState();
         Defend();
+    }
+
+
+    void OnEnable()
+    {
+        playerControls.Gameplay.Enable();
+    }
+
+    void Kick1()
+    {
+        playerAnim.Kick1();
     }
 
     void Defend()

@@ -1172,7 +1172,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050325808}
-  m_LocalRotation: {x: -0.000000010781574, y: 0.9639294, z: -0.26615816, w: -0.000000039047}
+  m_LocalRotation: {x: -0.000000022049065, y: 0.9639294, z: -0.26615816, w: -0.0000000798538}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1334,7 +1334,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357131328}
-  m_LocalRotation: {x: -0.0000000106209255, y: 0.98409504, z: -0.17764282, w: -0.00000005883717}
+  m_LocalRotation: {x: -0.00000001849904, y: 0.98409504, z: -0.17764282, w: -0.00000010247987}
   m_LocalPosition: {x: 9.000001, y: 5.723069, z: 6.4549193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1410,7 +1410,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425578990}
-  m_LocalRotation: {x: -0.000000006075623, y: 0.9975751, z: -0.06959825, w: -0.000000087083954}
+  m_LocalRotation: {x: -0.0000000059160103, y: 0.9975751, z: -0.06959824, w: -0.00000008479618}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1897,7 +1897,7 @@ MonoBehaviour:
   isKicking: 0
   leftPunch: {fileID: 1754860740}
   rightKick: {fileID: 135862355}
-  dustEffectLand: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+  dustEffectLand: {fileID: 100008, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
   playerAnim: {fileID: 0}
 --- !u!1 &2028026628
 GameObject:
@@ -1968,7 +1968,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028026628}
-  m_LocalRotation: {x: -0.000000011534067, y: 0.9686112, z: -0.24858074, w: -0.000000044943242}
+  m_LocalRotation: {x: -0.000000021097765, y: 0.9686112, z: -0.24858074, w: -0.000000082208835}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

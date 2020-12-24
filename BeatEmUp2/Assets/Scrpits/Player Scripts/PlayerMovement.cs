@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 
-    void DetectMov()
+   public void DetectMov()
     {
         //clamp the speed
         if (speed > maxSpeed)
