@@ -48,8 +48,11 @@ public class PlayerAttack : MonoBehaviour
         playerControls = new PlayerControlls();
 
         //controller actions
-        playerControls.Gameplay.Kick.performed += ctx => Kick1();
+        playerControls.Gameplay.Punch.performed += ctx => Punch();
+        playerControls.Gameplay.Kick.performed += ctx => Kick();
         playerControls.Gameplay.Movement.performed += ctx => GetComponentInParent<PlayerMovement>().DetectMov();
+        playerControls.Gameplay.Jump.performed += ctx => Jump();
+        playerControls.Gameplay.Block.performed += ctx => Defend();
 
         playerAnim = GetComponentInChildren<CharacterAnimation>();
     }
@@ -65,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
     {
         AnimatePlayerAttack();
         ResetComboState();
-        Defend();
+      //  Defend();
     }
 
 
@@ -74,14 +77,104 @@ public class PlayerAttack : MonoBehaviour
         playerControls.Gameplay.Enable();
     }
 
-    void Kick1()
+    void Jump()
     {
-        playerAnim.Kick1();
+        //set the velocity of the rb on the Y axis to the jump value
+        Vector3 vel = GetComponentInParent<Rigidbody>().velocity;
+        vel.y = 4;
+        GetComponentInParent<Rigidbody>().velocity = vel;
+
+        playerAnim.Jump();
     }
 
+    void Kick()
+    {
+        kickAttackTimer = 2;
+        hasPressedPunchKeyUp = false;
+
+        //return because no combos to perform
+        if (currentComboState == ComboState.KICK_2 || currentComboState == ComboState.PUNCH_3)
+        {
+            kickAttackTimer -= Time.deltaTime;
+            if (kickAttackTimer <= 1.5f)
+                isKicking = false;
+
+            return;
+        }
+
+        //start the combo
+        if (currentComboState == ComboState.NONE || currentComboState == ComboState.PUNCH_1 || currentComboState == ComboState.PUNCH_2)
+        {
+            currentComboState = ComboState.KICK_1;
+        }
+        //go to next state 
+        else if (currentComboState == ComboState.KICK_1)
+        {
+            currentComboState++;
+        }
+        activateTimerToReset = true;
+        currentComboTimer = defaultComboTimer;
+        switch (currentComboState)
+        {
+            case ComboState.KICK_1:
+                isKicking = true;
+                isPunching = false;
+                playerAnim.Kick1(); //1.25.45 YT
+                break;
+            case ComboState.KICK_2:
+                isKicking = true;
+                isPunching = false;
+                playerAnim.Kick2();
+                break;
+        }
+    }
+
+    void Punch()
+    {
+            punchAttackTimer = 2;
+            hasPressedPunchKeyUp = false;
+            if (currentComboState == ComboState.PUNCH_3 || currentComboState == ComboState.KICK_1 || currentComboState == ComboState.KICK_2)
+            {
+                punchAttackTimer -= Time.deltaTime;
+                if (punchAttackTimer <= 1.5f)
+                    isPunching = false;
+
+                return;
+            }
+
+            currentComboState++;    //move the combo state from none-punch1(arrayIndex)
+            activateTimerToReset = true;
+            currentComboTimer = defaultComboTimer;
+
+            switch (currentComboState)
+            {
+                case ComboState.PUNCH_1:
+                    isPunching = true;
+                    playerAnim.Punch1();
+                    break;
+
+                case ComboState.PUNCH_2:
+                    isPunching = true;
+                    playerAnim.Punch2();
+                    break;
+                case ComboState.PUNCH_3:
+                    isPunching = true;
+                    playerAnim.Punch3();
+                    break;
+            }
+    }
+
+    void PunchUP()
+    {
+        hasPressedPunchKeyUp = true;
+
+        punchAttackTimer -= Time.deltaTime;
+        if (punchAttackTimer <= 1.5f)
+            isPunching = false;
+    }
     void Defend()
     {
-        if (Input.GetKey(KeyCode.Q))
+       // if (Input.GetKey(KeyCode.Q))
             playerAnim.Defend();
     }
 
