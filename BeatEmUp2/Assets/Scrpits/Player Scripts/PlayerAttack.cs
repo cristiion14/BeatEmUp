@@ -174,7 +174,7 @@ public class PlayerAttack : MonoBehaviour
     }
     void Defend()
     {
-       // if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
             playerAnim.Defend();
     }
 

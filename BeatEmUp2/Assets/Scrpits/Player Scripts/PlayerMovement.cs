@@ -52,7 +52,6 @@ public class PlayerMovement : MonoBehaviour {
         RotatePlayer();
         AnimatePlayerWalk();
 
-
     //    isGrounded = Physics.CheckSphere(groundCheck.position, .2f, groundMask);
 
         Debug.LogError("Is grounded: " + checkGround());
