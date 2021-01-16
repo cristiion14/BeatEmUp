@@ -9,9 +9,11 @@ public class Chase : State<EnemyGreen>
     {
         Debug.LogError("CHASING!");
 
+        agent.enemyAnim.Attack(false);
+        agent.enemyAnim.Chase(true);
         agent.agent.SetDestination(agent.player.transform.position);
 
-        if ((agent.player.transform.position - agent.transform.position).sqrMagnitude < 2f)
-            agent.ChangeState(new IdleState());
+        if (agent.targetFound())
+            agent.ChangeState(new Attacking());
     }
 }

@@ -8,7 +8,7 @@ public class Patrol : State<EnemyGreen>
 {
     Vector3 walkPoint;
     bool walkPointSet;
-    float walkPointRange = 10;
+    float walkPointRange = 60;
 
     void SearchWalkPoint()
     {
@@ -25,17 +25,16 @@ public class Patrol : State<EnemyGreen>
         float randomZ = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
         float randomX = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
 
+
+
         //search for a random point on the map
         walkPoint = new Vector3(agent.transform.position.x + randomX, agent.transform.position.y, agent.transform.position.z + randomZ);
-     
-        float distanceToWalkPoint = (agent.transform.position - walkPoint).sqrMagnitude;
-        float distanceToPlayer = (agent.transform.position - agent.player.transform.position).sqrMagnitude;
 
+        agent.enemyAnim.Attack(false);
+        agent.enemyAnim.Chase(true);
+        agent.agent.SetDestination(walkPoint);
 
-        if (distanceToWalkPoint > 1f)
-            agent.agent.SetDestination(walkPoint);
-
-        if (distanceToPlayer < 1f)
+        if (agent.targetFound())
             agent.ChangeState(new Chase());
 
 

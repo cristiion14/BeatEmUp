@@ -53,3 +53,10 @@ public class Tags
 
 
 }
+
+public class EnemyAnim
+{
+    public const string FOUND_PLAYER = "FoundPlayer";
+    public const string CAN_ATTACK = "CanAttack";
+
+}

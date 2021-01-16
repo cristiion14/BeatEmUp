@@ -5,14 +5,14 @@ using UnityEngine.AI;
 
 public class EnemyGreen : MonoBehaviour
 {
-    public Animator enemyAnim;
 
+    public EnemyAnimations enemyAnim;
    public NavMeshAgent agent;         
 
     State<EnemyGreen> enemyFSM;          //reference to the enemy's finite state machine
     public PlayerMovement player;       // reference to the player GB
     public float speed = 0.3f;
-    public float radius = 5.0f;         // enemy's looking radius 
+    public float radius = 1.5f;         // enemy's looking radius 
 
     public LayerMask whatIsGround, whatIsPlayer;
     
