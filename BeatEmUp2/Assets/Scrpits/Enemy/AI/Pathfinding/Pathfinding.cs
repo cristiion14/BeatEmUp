@@ -105,7 +105,7 @@ public class Pathfinding : MonoBehaviour
 
         FinalPath.Reverse();//Reverse the path to get the correct order
 
-        iohannis.GetComponent<EnemyGreen>().enemyPath = FinalPath;//Set the final path
+     //   iohannis.GetComponent<EnemyGreen>().enemyPath = FinalPath;//Set the final path
     //    Debug.LogError("The final path assigned is: " + FinalPath);
                                                                //   veorica.GetComponent<Veorica>().FinalPath[veorica.GetComponent<Veorica>().nrPath] = FinalPath;
     }
