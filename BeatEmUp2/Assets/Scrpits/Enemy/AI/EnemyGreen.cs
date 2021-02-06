@@ -14,11 +14,12 @@ public class EnemyGreen : MonoBehaviour
     public float speed = 0.3f;
     public float radius = 1.5f;         // enemy's looking radius 
 
+
     public LayerMask whatIsGround, whatIsPlayer;
     
     public void Start()
     {
-        enemyFSM = new Patrol();
+        enemyFSM = new Chase();
     }
 
 

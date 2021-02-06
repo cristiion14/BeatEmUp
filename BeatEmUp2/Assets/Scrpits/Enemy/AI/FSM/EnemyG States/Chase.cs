@@ -13,7 +13,7 @@ public class Chase : State<EnemyGreen>
         agent.enemyAnim.Chase(true);
         agent.agent.SetDestination(agent.player.transform.position);
 
-        if (agent.targetFound())
-            agent.ChangeState(new Attacking());
+  //      if (agent.targetFound())
+    //        agent.ChangeState(new Attacking());
     }
 }

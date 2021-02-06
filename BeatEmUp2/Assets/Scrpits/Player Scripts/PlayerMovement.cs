@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
 
     //    isGrounded = Physics.CheckSphere(groundCheck.position, .2f, groundMask);
 
-        Debug.LogError("Is grounded: " + checkGround());
+//        Debug.LogError("Is grounded: " + checkGround());
     }
 
     void FixedUpdate()
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour {
             canIncreaseAcc = false;
         }
 
-        Debug.LogError("can increase speed: " + canIncreaseAcc + " the speed is: " + speed);
+//        Debug.LogError("can increase speed: " + canIncreaseAcc + " the speed is: " + speed);
 
         //increase acceleration
         if (canIncreaseAcc)
@@ -200,6 +200,8 @@ public class PlayerMovement : MonoBehaviour {
         {
             Instantiate(GetComponentInChildren<PlayerAttack>().hitEffect, new Vector3(other.GetContact(0).point.x, other.GetContact(0).point.y, other.GetContact(0).point.z), Quaternion.identity);   //GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
             Debug.LogError("INSTANTIAZA");
+
+            gameObject.GetComponent<Player>().TakeDMG(20);
         }
 
 

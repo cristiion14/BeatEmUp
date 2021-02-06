@@ -10,6 +10,6 @@ public class IdleState : State<EnemyGreen>
         Debug.LogError("STAM");
 
         if (Input.GetKeyDown(KeyCode.P))
-            agent.ChangeState(new Patrol());
+            agent.ChangeState(new Chase());
     }
 }
