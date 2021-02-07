@@ -35,7 +35,7 @@ public class AttackUniversal : MonoBehaviour
             colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(damage);
 
             //instantiate hit fx
-            Instantiate(hitFX, colliders[0].transform.position, Quaternion.identity);
+            Instantiate(hitFX, new Vector3(colliders[0].bounds.center.x, colliders[0].bounds.center.y, colliders[0].bounds.center.z), Quaternion.identity);
 
             //deactivate the gameobject
             gameObject.SetActive(false);

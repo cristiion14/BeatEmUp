@@ -20,7 +20,7 @@ public class EnemyGreen : MonoBehaviour
     //health values
     private float initialHealth = 100, currentHealth, maxHealth;
    [SerializeField] float damage = 30;
-    float shield = 100f;
+    float shield, initialShield = 100;
 
     //Getters and Setters for the health
     public float GetCurrentHealth() { return currentHealth; }
@@ -32,6 +32,8 @@ public class EnemyGreen : MonoBehaviour
     public Image healthBar;
     public Image shieldBar;
 
+    //FX
+    public GameObject deathFX;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -51,6 +53,7 @@ public class EnemyGreen : MonoBehaviour
         enemyFSM.Execute(this);
         UpdateHealthAndShield();
 
+      //  StartCoroutine(Die());
 //        Debug.LogError("Enemy's health is: " + currentHealth + " and the shield are: "+shield); 
     }
 
@@ -63,10 +66,7 @@ public class EnemyGreen : MonoBehaviour
         //Set Health
         currentHealth = initialHealth;
 
-        //Assign health and armour sprite fill amount to the player's health
-        healthBar.fillAmount = currentHealth / 100;
-
-        shieldBar.fillAmount = shield / 100;
+        shield = initialShield;
 
     }
 
@@ -103,6 +103,26 @@ public class EnemyGreen : MonoBehaviour
             currentHealth -= amount;
 
     }
+
+  public  IEnumerator Die()
+    {
+
+        if (currentHealth <= 0)
+        {
+            print("Enemy has died...");
+            yield return new WaitForSeconds(.5f);
+            Instantiate(deathFX, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(.3f);
+            print("Respawning enemy!");
+            gameObject.SetActive(true);
+
+            EnemyInitialize();
+
+        }
+    }
+
     /*
     private void OnCollisionEnter(Collision collision)
     {
