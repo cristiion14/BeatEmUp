@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
+   public EnemyGreen enemy;
+
     //animator reference
     private CharacterAnimation playerAnim;
     private Rigidbody rb;
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Use this for initialization
 	void Awake()
     {
+        
         rb = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<CharacterAnimation>();
         speed = initialSpeed;
@@ -194,18 +197,17 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    /*
     void OnCollisionEnter(Collision other)
     {
         if (other.collider.name == Tags.ENEMY_TAG)
         {
             Instantiate(GetComponentInChildren<PlayerAttack>().hitEffect, new Vector3(other.GetContact(0).point.x, other.GetContact(0).point.y, other.GetContact(0).point.z), Quaternion.identity);   //GetComponentInChildren<PlayerAttack>().leftPunch.transform.position, GetComponentInChildren<PlayerAttack>().leftPunch.transform.rotation);
-            Debug.LogError("INSTANTIAZA");
-
-            gameObject.GetComponent<Player>().TakeDMG(20);
+            Debug.LogError("Collision with: " + other.collider.name);
+            enemy.TakeDMG(30);
         }
-
-
     }
+    */
 
     void OnCollisionExit(Collision other)
     {
