@@ -13,7 +13,7 @@ public class AttackUniversal : MonoBehaviour
 
     public bool is_Player, is_Enemy;
 
-    public GameObject hitFX;
+    public GameObject hitFXPrefab;
 
 
     private void Update()
@@ -27,15 +27,43 @@ public class AttackUniversal : MonoBehaviour
 
         if(colliders.Length > 0)
         {
-            //has hit something
-            Debug.Log("Player hit the: " + colliders[0].gameObject.name);
+            //Player Attack
+            if(is_Player)
+            {
+                //deal damage to enemy
+                colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(damage);
 
+                //find the position to instantiate the effect
+                Vector3 hitFXPos = colliders[0].transform.position;
+                hitFXPos.y += 1.3f;
 
-            //deal damage
-            colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(damage);
+                if (colliders[0].transform.forward.x > 0)        //facing right
+                    hitFXPos.x += .3f;
+                else if (colliders[0].transform.forward.x < 0)      //facing left
+                    hitFXPos.x -= .3f;
+                
+                //instantiate hit fx
+                Instantiate(hitFXPrefab, hitFXPos, Quaternion.identity);
+            }
 
-            //instantiate hit fx
-            Instantiate(hitFX, new Vector3(colliders[0].bounds.center.x, colliders[0].bounds.center.y, colliders[0].bounds.center.z), Quaternion.identity);
+            //Enemy Attack
+            else if(is_Enemy)
+            {
+                //deal damage to player
+                colliders[0].gameObject.GetComponent<Player>().TakeDMG(damage);
+
+                //find the position to instantiate the effect
+                Vector3 hitFXPos = colliders[0].transform.position;
+                hitFXPos.y += 1.3f;
+
+                if (colliders[0].transform.forward.x > 0)        //facing right
+                    hitFXPos.x += .3f;
+                else if (colliders[0].transform.forward.x < 0)      //facing left
+                    hitFXPos.x -= .3f;
+
+                //instantiate hit fx
+                Instantiate(hitFXPrefab, hitFXPos, Quaternion.identity);
+            }
 
             //deactivate the gameobject
             gameObject.SetActive(false);

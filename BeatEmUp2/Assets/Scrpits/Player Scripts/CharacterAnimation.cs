@@ -10,8 +10,9 @@ public class CharacterAnimation : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
     }
-	
-    
+
+    #region Player Animations
+
     public void Walk(bool move)
     {
         anim.SetBool(AnimationTags.MOVEMENT, move);
@@ -71,4 +72,61 @@ public class CharacterAnimation : MonoBehaviour {
     {
         anim.SetTrigger(AnimationTags.JUMP_KICK);
     }
+
+    #endregion
+
+    #region Enemy Animations
+    public void EnemyAttack(int attack)
+    {
+        //Switch case to select the specific attack
+        switch(attack)
+        {
+                case 0:
+                    {
+                        anim.SetTrigger(AnimationTags.ATTACK_1_TRIGGER);
+                        break;
+                    }
+                case 1:
+                    {
+                        anim.SetTrigger(AnimationTags.ATTACK_2_TRIGGER);
+                        break;
+                    }
+                case 2:
+                    {
+                        anim.SetTrigger(AnimationTags.ATTACK_3_TRIGGER);
+                        break;
+                    }
+            }
+    }
+
+    public void Play_IddleAnim()
+    {
+        anim.Play(AnimationTags.IDLE_ANIMATION);
+    }
+
+    public void EnemyWalk(bool move)
+    {
+        anim.SetBool(AnimationTags.MOVEMENT, move);
+    }
+
+    public void KnockDown()
+    {
+        anim.SetTrigger(AnimationTags.KNOCK_DOWN_TRIGGER);
+    }
+
+    public void StandUP()
+    {
+        anim.SetTrigger(AnimationTags.STAND_UP_TRIGGER);
+    }
+
+    public void Hit()
+    {
+        anim.SetTrigger(AnimationTags.HIT_TRIGGER);
+    }
+
+    public void Death()
+    {
+        anim.SetTrigger(AnimationTags.DEATH_TRIGGER);
+    }
+    #endregion
 }

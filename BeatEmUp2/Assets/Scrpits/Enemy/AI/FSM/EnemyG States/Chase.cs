@@ -9,11 +9,15 @@ public class Chase : State<EnemyGreen>
     {
         Debug.LogError("CHASING!");
 
-        agent.enemyAnim.Attack(false);
-        agent.enemyAnim.Chase(true);
+        agent.enemyAnim.EnemyWalk(true);
         agent.agent.SetDestination(agent.player.transform.position);
 
-  //      if (agent.targetFound())
-    //        agent.ChangeState(new Attacking());
+        if (agent.targetFound())
+        {
+            agent.GetComponentInChildren<EnemyAttack>().followPlayer = false;
+            agent.GetComponentInChildren<EnemyAttack>().attackPlayer = true;
+
+            agent.ChangeState(new Attacking());
+        }
     }
 }

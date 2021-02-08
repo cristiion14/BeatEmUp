@@ -6,9 +6,22 @@ using UnityEngine.AI;
 
 public class EnemyGreen : MonoBehaviour
 {
+
+    //Attack vars
+    float attackDistance = 1f;
+    float chasePlayerAfterAttack = 1f;
+
+    float currentAttackTime;
+    float defaultAttackTime = 2f;
+
+    bool attackPlayer, followPlayer;
+
+
+    public CharacterAnimation enemyAnim;
+
     public Transform initialPos;
 
-    public EnemyAnimations enemyAnim;
+    //public EnemyAnimations enemyAnim;
     public NavMeshAgent agent;         
 
     State<EnemyGreen> enemyFSM;          //reference to the enemy's finite state machine
@@ -44,7 +57,7 @@ public class EnemyGreen : MonoBehaviour
 
     public void Start()
     {
-        enemyFSM = new IdleState();
+        enemyFSM = new Chase();
     }
 
 
@@ -122,6 +135,29 @@ public class EnemyGreen : MonoBehaviour
 
         }
     }
+
+
+    public void Attack()
+    {
+        //if the player isn't supposed to be hit, exit function
+        if (!attackPlayer)
+            return;
+
+        currentAttackTime += Time.deltaTime;
+
+        if (currentAttackTime > defaultAttackTime)
+        {
+            enemyAnim.EnemyAttack(Random.Range(0, 3));
+            currentAttackTime = 0f;
+        }
+
+        if (Vector3.Distance(transform.position, GetComponent<EnemyGreen>().player.transform.position) > attackDistance + chasePlayerAfterAttack)
+        {
+            attackPlayer = false;
+            followPlayer = true;
+        }
+    }
+
 
     /*
     private void OnCollisionEnter(Collision collision)

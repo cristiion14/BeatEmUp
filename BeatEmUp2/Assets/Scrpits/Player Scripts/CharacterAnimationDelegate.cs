@@ -5,8 +5,10 @@ using UnityEngine;
 public class CharacterAnimationDelegate : MonoBehaviour
 {
     public GameObject leftArmAttackPoint, rightArmAttackPoint, leftKickAttackPoint, rightKickAttackPoint;
-    
-    //turn on the attack points
+
+    public GameObject enemyLeftArmAttackPoint, enemyRightArmAttackPoint, enemyLeftKickAttackPoint, enemyRightKickAttackPoint;
+
+    #region Turn on the attack points for player
     void LeftArmAttackON()
     {
         leftArmAttackPoint.SetActive(true);
@@ -50,4 +52,59 @@ public class CharacterAnimationDelegate : MonoBehaviour
         if (rightKickAttackPoint.activeInHierarchy)
             rightKickAttackPoint.SetActive(false);
     }
+    #endregion
+
+    #region Turn on attack points for enemy
+
+    void EnemyLHAttackPointON()
+    {
+        enemyLeftArmAttackPoint.SetActive(true);
+    }
+
+    void EnemyLHAttackPointOFF()
+    {
+        if (enemyLeftArmAttackPoint.activeInHierarchy)
+            enemyLeftArmAttackPoint.SetActive(false);
+    }
+
+
+    void EnemyRHAttackPointON()
+    {
+        enemyRightArmAttackPoint.SetActive(true);
+    }
+
+    void EnemyRHAttackPointOFF()
+    {
+        if (enemyRightArmAttackPoint.activeInHierarchy)
+            enemyRightArmAttackPoint.SetActive(false);
+    }
+
+
+
+    void EnemyLKAttackPointON()
+    {
+        enemyLeftKickAttackPoint.SetActive(true);
+    }
+
+    void EnemyLKAttackPointOFF()
+    {
+        if (enemyLeftKickAttackPoint.activeInHierarchy)
+            enemyLeftKickAttackPoint.SetActive(false);
+    }
+
+
+    void EnemyRKAttackPointON()
+    {
+        enemyRightKickAttackPoint.SetActive(true);
+    }
+
+    void EnemyRKAttackPointOFF()
+    {
+        if (enemyRightKickAttackPoint.activeInHierarchy)
+            enemyRightKickAttackPoint.SetActive(false);
+    }
+
+
+    #endregion
+
 }
