@@ -9,9 +9,11 @@ public class GM : MonoBehaviour
 
     private void Update()
     {
-        if(enemyGreen.GetCurrentHealth() <= 0 )
+        
+        if (enemyGreen.GetCurrentHealth() <= 0 )
         {
-            StartCoroutine(enemyGreen.Die());
+        //    enemyGreen.enemyAnim.Death();
+          //  StartCoroutine(enemyGreen.Die());
         }
     }
 

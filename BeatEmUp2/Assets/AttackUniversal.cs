@@ -8,8 +8,8 @@ public class AttackUniversal : MonoBehaviour
 
     public LayerMask collisionLayer;
 
-    public float radius = 1f;
-    public float damage = 10f;
+    public float radius = .5f;
+    float damage = 10f;
 
     public bool is_Player, is_Enemy;
 
@@ -41,9 +41,20 @@ public class AttackUniversal : MonoBehaviour
                     hitFXPos.x += .3f;
                 else if (colliders[0].transform.forward.x < 0)      //facing left
                     hitFXPos.x -= .3f;
-                
+
+
+                //deactivate the running anim of the enemy
+                //colliders[0].gameObject.GetComponent<EnemyGreen>().enemyAnim.EnemyWalk(false);
+               // colliders[0].gameObject.GetComponent<EnemyGreen>().enemyRB.constraints = RigidbodyConstraints.FreezePosition;
+                  colliders[0].gameObject.GetComponent<EnemyGreen>().canMove = false;
+
+
                 //instantiate hit fx
                 Instantiate(hitFXPrefab, hitFXPos, Quaternion.identity);
+
+                //play the hit animation on the enemy
+                colliders[0].gameObject.GetComponent<EnemyGreen>().enemyAnim.Hit();
+
             }
 
             //Enemy Attack

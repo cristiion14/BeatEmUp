@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CharacterAnimationDelegate : MonoBehaviour
 {
+    // This class activates the attack points for collision detection of hits between the player and enemy
+
+
     public GameObject leftArmAttackPoint, rightArmAttackPoint, leftKickAttackPoint, rightKickAttackPoint;
 
     public GameObject enemyLeftArmAttackPoint, enemyRightArmAttackPoint, enemyLeftKickAttackPoint, enemyRightKickAttackPoint;

@@ -12,16 +12,14 @@ public class EnemyAttack : MonoBehaviour
 
    public bool attackPlayer, followPlayer;
 
-    private void Update()
-    {
-
-    }
-
+    
    public void Attack()
     {
         //if the player isn't supposed to be hit, exit function
         if (!attackPlayer)
             return;
+
+
 
         currentAttackTime += Time.deltaTime;
 

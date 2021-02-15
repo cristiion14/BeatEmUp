@@ -10,8 +10,19 @@ public class Attacking : State<EnemyGreen>
     {
         agent.GetComponentInChildren<EnemyAttack>().Attack();
 
+        agent.enemyAnim.EnemyWalk(false);
+
+        agent.agent.isStopped = true;
+        agent.agent.stoppingDistance = .5f;
+        agent.agent.autoBraking = true;
+
         if (agent.GetComponentInChildren<EnemyAttack>().followPlayer)
             agent.ChangeState(new Chase());
+
+
+      //  if (agent.GetCurrentHealth() <= 0)
+        //    agent.ChangeState(new DeathState());
+
         Debug.LogError("Attacking!");
 
     }

@@ -7,6 +7,9 @@ using UnityEngine.AI;
 public class EnemyGreen : MonoBehaviour
 {
 
+
+    public bool canMove = true;                //used to stop the enemy from moving when attacking
+
     //Attack vars
     float attackDistance = 1f;
     float chasePlayerAfterAttack = 1f;
@@ -27,13 +30,14 @@ public class EnemyGreen : MonoBehaviour
     State<EnemyGreen> enemyFSM;          //reference to the enemy's finite state machine
     public PlayerMovement player;       // reference to the player GB
     public float speed = 0.3f;
-    public float radius = 1.5f;         // enemy's looking radius 
+    public float radius = 1f;         // enemy's looking radius 
 
 
     //health values
     private float initialHealth = 100, currentHealth, maxHealth;
    [SerializeField] float damage = 30;
     float shield, initialShield = 100;
+    bool activateDeathAnim = false;
 
     //Getters and Setters for the health
     public float GetCurrentHealth() { return currentHealth; }
@@ -46,13 +50,14 @@ public class EnemyGreen : MonoBehaviour
     public Image shieldBar;
 
     //FX
-    public GameObject deathFX;
+    public GameObject deathFX, reviveFX;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
     private void Awake()
     {
         EnemyInitialize();
+       
     }
 
     public void Start()
@@ -63,16 +68,21 @@ public class EnemyGreen : MonoBehaviour
 
     void Update()
     {
-        enemyFSM.Execute(this);
+        if (GetCurrentHealth() > 0)
+        {
+            enemyFSM.Execute(this);
+        }
+
         UpdateHealthAndShield();
 
-      //  StartCoroutine(Die());
-//        Debug.LogError("Enemy's health is: " + currentHealth + " and the shield are: "+shield); 
     }
 
 
     void EnemyInitialize()
     {
+
+        enemyAnim.Play_IddleAnim();
+
         //Spawn player to initial position
         transform.position = initialPos.position;
 
@@ -80,6 +90,8 @@ public class EnemyGreen : MonoBehaviour
         currentHealth = initialHealth;
 
         shield = initialShield;
+
+
 
     }
 
@@ -111,29 +123,40 @@ public class EnemyGreen : MonoBehaviour
         if (shield > 0)
             shield -= amount;
 
+        //take dmg from current health
 
        else if (shield <= 0 && currentHealth > 0)
             currentHealth -= amount;
 
+
+        //daeth of enemy object
+        if (currentHealth <= 0)
+            // play enemy death courutine
+            StartCoroutine(Die());
     }
 
-  public  IEnumerator Die()
+    public IEnumerator Die()
     {
 
-        if (currentHealth <= 0)
-        {
-            print("Enemy has died...");
-            yield return new WaitForSeconds(.5f);
-            Instantiate(deathFX, transform.position, Quaternion.identity);
-            gameObject.SetActive(false);
+        //instantiate death FX
+        Instantiate(deathFX, transform.position, Quaternion.identity);
 
-            yield return new WaitForSeconds(.3f);
-            print("Respawning enemy!");
-            gameObject.SetActive(true);
+        enemyAnim.Death();
+        yield return new WaitForSeconds(3.25f);
 
-            EnemyInitialize();
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
 
-        }
+        yield return new WaitForSeconds(.5f);
+
+        //instantiate revive fx
+        Instantiate(reviveFX, initialPos);
+
+        //set gb to active
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+
+
+        EnemyInitialize();
+
     }
 
 

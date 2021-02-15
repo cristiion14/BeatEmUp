@@ -68,7 +68,17 @@ public class PlayerAttack : MonoBehaviour
     {
         AnimatePlayerAttack();
         ResetComboState();
-      //  Defend();
+
+
+        
+        if (isPunching || isKicking)
+            GetComponentInParent<PlayerMovement>().enemy.canMove = false;
+
+        else if(!isPunching || !isKicking)
+            GetComponentInParent<PlayerMovement>().enemy.canMove = true;
+        
+
+        //  Defend();
     }
 
 

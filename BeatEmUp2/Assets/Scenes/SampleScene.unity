@@ -496,7 +496,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5538461, y: 1}
+    m_SensorSize: {x: 1.7549669, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -802,7 +802,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   radius: 1
-  damage: 25
   is_Player: 0
   is_Enemy: 1
   hitFXPrefab: {fileID: 135197952}
@@ -853,7 +852,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   radius: 1
-  damage: 10
   is_Player: 1
   is_Enemy: 0
   hitFXPrefab: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
@@ -1216,7 +1214,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   radius: 1
-  damage: 25
   is_Player: 0
   is_Enemy: 1
   hitFXPrefab: {fileID: 135197952}
@@ -1437,16 +1434,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6762401876baf80449903cd26733e9e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 0
   enemyAnim: {fileID: 33796631}
   initialPos: {fileID: 1823847367}
   agent: {fileID: 766506415}
   player: {fileID: 264104272}
   speed: 3
-  radius: 5
-  damage: 30
+  radius: 2
+  damage: 10
   healthBar: {fileID: 160366452}
   shieldBar: {fileID: 1147629846}
   deathFX: {fileID: 100106, guid: 0035b176600dd0b4e9b6ef85a7b2b334, type: 3}
+  reviveFX: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f, type: 3}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
@@ -1536,7 +1535,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   radius: 1
-  damage: 10
   is_Player: 1
   is_Enemy: 0
   hitFXPrefab: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
@@ -1927,7 +1925,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   radius: 1
-  damage: 10
   is_Player: 1
   is_Enemy: 0
   hitFXPrefab: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
@@ -1984,7 +1981,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5538461, y: 1}
+    m_SensorSize: {x: 1.7549669, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2478,7 +2475,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   radius: 1
-  damage: 10
   is_Player: 1
   is_Enemy: 0
   hitFXPrefab: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
@@ -2618,7 +2614,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357131328}
-  m_LocalRotation: {x: -0.000000004824947, y: 0.98409504, z: -0.17764282, w: -0.00000002672895}
+  m_LocalRotation: {x: -0.000000018494497, y: 0.98409504, z: -0.17764282, w: -0.00000010245469}
   m_LocalPosition: {x: 9.000001, y: 5.723069, z: 6.4549193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2672,7 +2668,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   radius: 1
-  damage: 25
   is_Player: 0
   is_Enemy: 1
   hitFXPrefab: {fileID: 135197952}
@@ -2729,7 +2724,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5538461, y: 1}
+    m_SensorSize: {x: 1.7549669, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2745,7 +2740,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425578990}
-  m_LocalRotation: {x: -0.0000000032292378, y: 0.9975751, z: -0.06959826, w: -0.000000046285752}
+  m_LocalRotation: {x: -0.000000005907128, y: 0.9975751, z: -0.06959824, w: -0.00000008466886}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3218,7 +3213,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   radius: 1
-  damage: 25
   is_Player: 0
   is_Enemy: 1
   hitFXPrefab: {fileID: 135197952}
@@ -5262,7 +5256,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5538461, y: 1}
+    m_SensorSize: {x: 1.7549669, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5278,7 +5272,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028026628}
-  m_LocalRotation: {x: -0.000000011533713, y: 0.9686112, z: -0.24858074, w: -0.000000044941878}
+  m_LocalRotation: {x: -0.000000021097765, y: 0.9686112, z: -0.24858074, w: -0.000000082208835}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

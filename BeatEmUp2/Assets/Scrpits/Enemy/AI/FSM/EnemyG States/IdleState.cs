@@ -11,5 +11,8 @@ public class IdleState : State<EnemyGreen>
 
         if (Input.GetKeyDown(KeyCode.P))
             agent.ChangeState(new Chase());
+
+        if (agent.canMove)
+            agent.ChangeState(new Chase());
     }
 }

@@ -9,6 +9,10 @@ public class Chase : State<EnemyGreen>
     {
         Debug.LogError("CHASING!");
 
+        agent.agent.isStopped = false;
+
+        agent.agent.stoppingDistance = .5f;
+
         agent.enemyAnim.EnemyWalk(true);
         agent.agent.SetDestination(agent.player.transform.position);
 
@@ -17,7 +21,13 @@ public class Chase : State<EnemyGreen>
             agent.GetComponentInChildren<EnemyAttack>().followPlayer = false;
             agent.GetComponentInChildren<EnemyAttack>().attackPlayer = true;
 
+
             agent.ChangeState(new Attacking());
         }
+
+        
+
+       // if (agent.GetCurrentHealth() <= 0)
+     //       agent.ChangeState(new DeathState());
     }
 }
