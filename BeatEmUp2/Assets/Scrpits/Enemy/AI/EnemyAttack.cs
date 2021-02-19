@@ -20,7 +20,6 @@ public class EnemyAttack : MonoBehaviour
             return;
 
 
-
         currentAttackTime += Time.deltaTime;
 
         if(currentAttackTime>defaultAttackTime)
@@ -29,7 +28,7 @@ public class EnemyAttack : MonoBehaviour
             currentAttackTime = 0f;
         }
 
-        if (Vector3.Distance(transform.position, GetComponentInParent<EnemyGreen>().player.transform.position)>attackDistance+chasePlayerAfterAttack)
+        if (Vector3.Distance(transform.position, GetComponentInParent<EnemyGreen>().playerGB.transform.position)>attackDistance+chasePlayerAfterAttack)
         {
             attackPlayer = false;
             followPlayer = true;

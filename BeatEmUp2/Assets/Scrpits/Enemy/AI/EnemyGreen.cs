@@ -32,6 +32,7 @@ public class EnemyGreen : MonoBehaviour
     public float speed = 0.3f;
     public float radius = 1f;         // enemy's looking radius 
 
+    public GameObject playerGB;
 
     //health values
     private float initialHealth = 100, currentHealth, maxHealth;
@@ -62,6 +63,8 @@ public class EnemyGreen : MonoBehaviour
 
     public void Start()
     {
+        playerGB = GameObject.FindGameObjectWithTag(Tags.PLAYER_TAG);
+
         enemyFSM = new Chase();
     }
 
@@ -103,7 +106,7 @@ public class EnemyGreen : MonoBehaviour
 
     public bool targetFound()
     {
-        float distance = (player.transform.position - transform.position).sqrMagnitude;
+        float distance = (playerGB.transform.position - transform.position).sqrMagnitude;
         if (distance <= radius * radius)
             return true;
         else

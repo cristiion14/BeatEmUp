@@ -14,7 +14,7 @@ public class Chase : State<EnemyGreen>
         agent.agent.stoppingDistance = .5f;
 
         agent.enemyAnim.EnemyWalk(true);
-        agent.agent.SetDestination(agent.player.transform.position);
+        agent.agent.SetDestination(agent.playerGB.transform.position);
 
         if (agent.targetFound())
         {

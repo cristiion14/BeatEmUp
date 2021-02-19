@@ -70,13 +70,23 @@ public class PlayerAttack : MonoBehaviour
         ResetComboState();
 
 
-        
-        if (isPunching || isKicking)
-            GetComponentInParent<PlayerMovement>().enemy.canMove = false;
 
-        else if(!isPunching || !isKicking)
+        if (isPunching || isKicking)
+        {
+              GetComponentInParent<PlayerMovement>().enemy.canMove = false;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        }
+
+
+
+        else if (!isPunching || !isKicking)
+        {
             GetComponentInParent<PlayerMovement>().enemy.canMove = true;
-        
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
+        }
 
         //  Defend();
     }
@@ -232,6 +242,7 @@ public class PlayerAttack : MonoBehaviour
 
         if(hasPressedPunchKeyUp)
         {
+
             punchAttackTimer -= Time.deltaTime;
             if (punchAttackTimer <= 1.5f)
                 isPunching = false;
