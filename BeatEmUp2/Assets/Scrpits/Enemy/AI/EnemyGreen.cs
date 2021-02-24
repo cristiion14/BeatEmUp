@@ -83,6 +83,8 @@ public class EnemyGreen : MonoBehaviour
 
     void EnemyInitialize()
     {
+        GetComponent<Collider>().enabled = true;
+
 
         enemyAnim.Play_IddleAnim();
 
@@ -143,6 +145,9 @@ public class EnemyGreen : MonoBehaviour
 
         //instantiate death FX
         Instantiate(deathFX, transform.position, Quaternion.identity);
+
+        //deactivate the collider
+        GetComponent<Collider>().enabled = false;
 
         enemyAnim.Death();
         yield return new WaitForSeconds(3.25f);

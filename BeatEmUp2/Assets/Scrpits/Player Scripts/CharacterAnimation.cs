@@ -73,6 +73,16 @@ public class CharacterAnimation : MonoBehaviour {
         anim.SetTrigger(AnimationTags.JUMP_KICK);
     }
 
+    public void Hit()
+    {
+        anim.SetTrigger(AnimationTags.HIT);
+    }
+
+    public void Smoke(bool smoke)
+    {
+        anim.SetBool(AnimationTags.CAN_SMOKE, smoke);
+    }
+
     #endregion
 
     #region Enemy Animations
@@ -119,7 +129,7 @@ public class CharacterAnimation : MonoBehaviour {
         anim.SetTrigger(AnimationTags.STAND_UP_TRIGGER);
     }
 
-    public void Hit()
+    public void HitPlayer()
     {
         anim.SetTrigger(AnimationTags.HIT_TRIGGER);
     }

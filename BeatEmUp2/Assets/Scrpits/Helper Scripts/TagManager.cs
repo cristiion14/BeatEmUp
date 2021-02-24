@@ -31,6 +31,10 @@ public class AnimationTags : MonoBehaviour {
     public const string GROUND_PUNCH = "GroundPunch";
     public const string JUMP_KICK = "JumpKick";
 
+    public const string HIT = "Hit";
+
+    public const string CAN_SMOKE = "CanSmoke";
+
 }
 
 public class Axis

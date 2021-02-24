@@ -58,8 +58,12 @@ public class AttackUniversal : MonoBehaviour
             }
 
             //Enemy Attack
-            else if(is_Enemy)
+             if(is_Enemy)
             {
+
+                //play hit animation on player
+                colliders[0].gameObject.GetComponentInChildren<CharacterAnimation>().HitPlayer();
+
                 //deal damage to player
                 colliders[0].gameObject.GetComponent<Player>().TakeDMG(damage);
 

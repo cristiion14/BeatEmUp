@@ -22,6 +22,10 @@ public class GM : MonoBehaviour
     private void Update()
     {
 
+        // Timer to spawn enemies
+
+        /*
+
         timer -= Time.deltaTime;
 
         if(timer <= 0)
@@ -31,6 +35,8 @@ public class GM : MonoBehaviour
             SpawnEnemy(enemyPrefab, enemyNR);
             timer += 20;
         }
+
+        */
     }
 
 
