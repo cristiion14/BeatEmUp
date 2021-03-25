@@ -90,8 +90,10 @@ public class PlayerMovement : MonoBehaviour {
             speed = maxSpeed;
 
         //move the player
-        rb.velocity = new Vector3(Input.GetAxis(Axis.HORIZONTAL_AXIS) * (-speed), rb.velocity.y, Input.GetAxis(Axis.VERTICAL_AXIS) * (-speed));
+          rb.velocity = new Vector3(Input.GetAxis(Axis.HORIZONTAL_AXIS) * (-speed), rb.velocity.y, Input.GetAxis(Axis.VERTICAL_AXIS) * (-speed));
+     //   rb.velocity = new Vector3(Input.GetAxisRaw(Axis.HORIZONTAL_AXIS), rb.velocity.y, Input.GetAxisRaw(Axis.VERTICAL_AXIS) * 300);
 
+        
 
         //acceleration
         if ((Input.GetAxisRaw(Axis.VERTICAL_AXIS)>0 && Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)>0) ||          
@@ -122,6 +124,7 @@ public class PlayerMovement : MonoBehaviour {
         //  speed += acceleration * Time.deltaTime;
         else
             speed = initialSpeed;
+        
 
         //Jump
         if (Input.GetKeyDown(KeyCode.Space) && checkGround())

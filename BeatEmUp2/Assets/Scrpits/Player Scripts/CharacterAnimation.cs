@@ -81,6 +81,7 @@ public class CharacterAnimation : MonoBehaviour {
     public void Smoke(bool smoke)
     {
         anim.SetBool(AnimationTags.CAN_SMOKE, smoke);
+
     }
 
     #endregion

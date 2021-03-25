@@ -37,10 +37,13 @@ public class PlayerAttack : MonoBehaviour
     float defaultComboTimer = 0.4f;
     float currentComboTimer;
 
+    public float comboResetTimer = 3;
+    public  int comboCounter = 0;
+    public bool resetComboCounter = false;
+
     ComboState currentComboState;
     // Use this for initialization
 
-    
 
     void Awake()
     {
@@ -73,24 +76,58 @@ public class PlayerAttack : MonoBehaviour
 
         if (isPunching || isKicking)
         {
-              GetComponentInParent<PlayerMovement>().enemy.canMove = false;
+             // GetComponentInParent<PlayerMovement>().enemy.canMove = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
+
         }
 
 
 
-        else if (!isPunching || !isKicking)
+        else if (!isPunching && !isKicking)
         {
-            GetComponentInParent<PlayerMovement>().enemy.canMove = true;
+            // movement constraints reset
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
+            // GetComponentInChildren<AttackUniversal>().canIncreaseCombo = false;
+            resetComboCounter = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
         }
 
+
+        if(resetComboCounter)
+        {
+//            Debug.LogError("COMBO FALSE!");
+            comboResetTimer -= Time.deltaTime;
+            if (comboResetTimer <= 0)
+            {
+                comboCounter = 0;
+                comboResetTimer = 3;
+                resetComboCounter = false;
+
+
+            }
+            //   ComboReset();
+        }
+
+        GetComponentInParent<Player>().gm.GetComponent<GM>().comboCounterTXT.text = comboCounter.ToString() +" \n    "+ comboResetTimer.ToString();
+
+
         //  Defend();
     }
+    void ComboReset()
+    {
+        //combo reset
+        //float timer = GetComponentInChildren<AttackUniversal>().comboTimer;
 
+        float timer = 3;
+        timer -= Time.deltaTime;
+
+        if (timer <= 0)
+        {
+            comboCounter = 0;
+        }
+    }
 
     void OnEnable()
     {
@@ -171,17 +208,24 @@ public class PlayerAttack : MonoBehaviour
                 case ComboState.PUNCH_1:
                     isPunching = true;
                     playerAnim.Punch1();
-                    break;
+                GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Hit", false);
+
+                break;
 
                 case ComboState.PUNCH_2:
                     isPunching = true;
                     playerAnim.Punch2();
-                    break;
+                GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Hit", false);
+
+                break;
                 case ComboState.PUNCH_3:
                     isPunching = true;
                     playerAnim.Punch3();
-                    break;
+                GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Hit", false);
+
+                break;
             }
+
     }
 
     void PunchUP()

@@ -22,13 +22,15 @@ public class Player : MonoBehaviour
     public Image shieldBar;
 
     public Transform initialPos;
+
+    public GM gm;
     // Start is called before the first frame update
 
     private void Awake()
     {
         //Initialize player
         PlayerInitialize();
-
+        gm = GameObject.Find("GM").GetComponent<GM>();
     }
 
     // Update is called once per frame
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
     {
         UpdateHealthAndShield();
 
-        Debug.Log(currentHealth);
+
 
         Mathf.Clamp(currentHealth, 0, maxHealth);
         Mathf.Clamp(shield, 0, maxHealth);
@@ -47,16 +49,24 @@ public class Player : MonoBehaviour
         {
             GetComponentInChildren<CharacterAnimation>().Smoke(true);
 
+       
 
             if (currentHealth >= 0 && shield <= 0 && currentHealth <= maxHealth)
-                currentHealth += 1;
+                currentHealth += .25f;
 
             if (currentHealth >=maxHealth  && shield >= 0 && shield <= 100)
-                shield += 1;
+                shield += .25f;
         }
 
-        if(Input.GetKeyUp(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E))
+            gm.GetComponent<AudioManager>().Play("Healing", true);
+
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
             GetComponentInChildren<CharacterAnimation>().Smoke(false);
+            gm.GetComponent<AudioManager>().Stop("Healing");
+        }
 
     }
 

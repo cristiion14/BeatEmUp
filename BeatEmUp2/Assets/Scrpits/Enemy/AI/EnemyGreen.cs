@@ -83,7 +83,7 @@ public class EnemyGreen : MonoBehaviour
 
     void EnemyInitialize()
     {
-        GetComponent<Collider>().enabled = true;
+     //   GetComponent<Collider>().enabled = true;
 
 
         enemyAnim.Play_IddleAnim();
@@ -142,6 +142,8 @@ public class EnemyGreen : MonoBehaviour
 
     public IEnumerator Die()
     {
+        //play sound
+        player.GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Enemy Death", false);
 
         //instantiate death FX
         Instantiate(deathFX, transform.position, Quaternion.identity);

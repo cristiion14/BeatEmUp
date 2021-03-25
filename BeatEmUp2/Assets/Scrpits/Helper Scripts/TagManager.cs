@@ -56,6 +56,16 @@ public class Tags
     public const string HEALTH_UI = "HealthUI";
 
 
+    /// <summary>
+    /// tags of the attack points of the player
+    /// </summary>
+    public const string PLeft_Punch = "LeftPunch";
+    public const string PRight_Punch = "RightPunch";
+    public const string PLeft_Kick = "LeftKick";
+    public const string PRight_Kick = "RightKick";
+
+
+
 }
 
 public class EnemyAnim

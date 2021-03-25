@@ -8,6 +8,11 @@ TagManager:
   - LeftPunch
   - Ground
   - FxTemporaire
+  - Body
+  - Head
+  - RightPunch
+  - LeftKick
+  - RightKick
   layers:
   - Default
   - TransparentFX

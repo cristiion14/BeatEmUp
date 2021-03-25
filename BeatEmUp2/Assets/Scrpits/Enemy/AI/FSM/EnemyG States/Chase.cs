@@ -7,7 +7,7 @@ public class Chase : State<EnemyGreen>
 {
     public override void Execute(EnemyGreen agent)
     {
-        Debug.LogError("CHASING!");
+ //       Debug.LogError("CHASING!");
 
         agent.agent.isStopped = false;
 

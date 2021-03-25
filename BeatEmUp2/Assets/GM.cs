@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class GM : MonoBehaviour
 {
     public Player player;
     public EnemyGreen enemyGreen;
 
+    public GameObject playerGB;
     public int enemyNR;
     List<GameObject> enemyList = new List<GameObject>();
     public GameObject enemyPrefab;
+    public GameObject bodyCol, headCol, bodyP, headP;
 
     float timer = 20f;
 
+   public bool canIncreaseCombo = false;
+    public TextMeshProUGUI comboCounterTXT;
+    float playerComboCounter = 0f;
+    float playerComboTimer = 2f;
 
     private void Start()
     {
@@ -21,7 +27,25 @@ public class GM : MonoBehaviour
 
     private void Update()
     {
+  //      comboCounterTXT.text = playerGB
 
+        /*
+        Debug.Log(playerGB.GetComponentInChildren<AttackUniversal>().canIncreaseCombo);
+
+        if (playerGB.GetComponentInChildren<AttackUniversal>().canIncreaseCombo)
+            playerComboCounter++;
+
+        if(!playerGB.GetComponentInChildren<PlayerAttack>().isPunching && !playerGB.GetComponentInChildren<PlayerAttack>().isKicking)
+        {
+            playerComboTimer -= Time.deltaTime;
+            if (playerComboTimer <= 0)
+            {
+                player.GetComponentInChildren<AttackUniversal>().canIncreaseCombo = false;
+                playerComboTimer = 2;
+            }
+        }
+
+        */
         // Timer to spawn enemies
 
         /*
@@ -37,6 +61,8 @@ public class GM : MonoBehaviour
         }
 
         */
+
+
     }
 
 

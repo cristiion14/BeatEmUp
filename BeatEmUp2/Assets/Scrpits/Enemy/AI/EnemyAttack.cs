@@ -26,6 +26,8 @@ public class EnemyAttack : MonoBehaviour
         {
             enemyAnim.EnemyAttack(Random.Range(0, 3));
             currentAttackTime = 0f;
+
+            GetComponent<EnemyGreen>().player.GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Hit", false);
         }
 
         if (Vector3.Distance(transform.position, GetComponentInParent<EnemyGreen>().playerGB.transform.position)>attackDistance+chasePlayerAfterAttack)
