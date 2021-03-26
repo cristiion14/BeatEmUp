@@ -5,25 +5,29 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     //health values
-    private float initialHealth = 100, currentHealth, maxHealth = 100;
+    private float initialHealth = 100f, currentHealth, maxHealth = 100f;
 
-    float shield = 100f;
+    float initialShield = 100f, currentShield, maxShield = 100f;
 
-
+    public Transform initialPos;
 
     //Getters and Setters for the health
     public float GetCurrentHealth() { return currentHealth; }
     public void SetCurrentHealth(float newHealth) { currentHealth = initialHealth; }
-    public float GetCurrentShield() { return shield; }
-    public void SetCurrentShield(float newShield) { shield = newShield; }
+    public float GetCurrentShield() { return currentShield; }
+    public void SetCurrentShield(float newShield) { currentShield = newShield; }
 
     //UI
     public Image healthBar;
     public Image shieldBar;
 
-    public Transform initialPos;
 
     public GM gm;
+
+    //FXs
+    public GameObject playerDeathFX;
+    public GameObject playerReviveFX;
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -41,7 +45,7 @@ public class Player : MonoBehaviour
 
 
         Mathf.Clamp(currentHealth, 0, maxHealth);
-        Mathf.Clamp(shield, 0, maxHealth);
+        Mathf.Clamp(currentShield, 0, maxShield);
 
         //activate/deactivate healing animation
         //heal player
@@ -51,11 +55,11 @@ public class Player : MonoBehaviour
 
        
 
-            if (currentHealth >= 0 && shield <= 0 && currentHealth <= maxHealth)
+            if (currentHealth >= 0 && currentShield <= 0 && currentHealth <= maxHealth)
                 currentHealth += .25f;
 
-            if (currentHealth >=maxHealth  && shield >= 0 && shield <= 100)
-                shield += .25f;
+            if (currentHealth >=maxHealth  && currentShield >= 0 && currentShield <= 100)
+                currentShield += .25f;
         }
 
         if(Input.GetKeyDown(KeyCode.E))
@@ -78,10 +82,36 @@ public class Player : MonoBehaviour
         //Set Health
         currentHealth = initialHealth;
 
-        //Assign health and armour sprite fill amount to the player's health
-        healthBar.fillAmount = currentHealth / 100;
+        //set shield
+        currentShield = initialShield;
+    }
 
-        shieldBar.fillAmount = shield / 100;
+    public IEnumerator Die()
+    {
+        //play sound
+        gm.GetComponent<AudioManager>().Play("Enemy Death", false);
+
+        //instantiate death FX
+        Instantiate(playerDeathFX, transform.position, Quaternion.identity);
+
+        //deactivate the collider
+        GetComponent<Collider>().enabled = false;
+
+        GetComponentInChildren<PlayerAttack>().playerAnim.Death();
+        yield return new WaitForSeconds(1.25f);
+
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(.5f);
+
+        //instantiate revive fx
+        Instantiate(playerReviveFX, initialPos);
+
+        //set gb to active
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+
+
+        PlayerInitialize();
 
     }
 
@@ -89,18 +119,23 @@ public class Player : MonoBehaviour
     {
         //Update the sprite fill amount
         healthBar.fillAmount = currentHealth / 100;
-        shieldBar.fillAmount = shield / 100;
+        shieldBar.fillAmount = currentShield / 100;
     }
 
     public void TakeDMG(float amount)
     {
-        //take damage first from the shield
-        if (shield > 0)
-            shield -= amount;
+        //take damage first from the currentShield
+        if (currentShield > 0)
+            currentShield -= amount;
        
 
-        if (shield <= 0 && currentHealth > 0)
+        if (currentShield <= 0 && currentHealth > 0)
             currentHealth -= amount;
+
+
+        if (currentHealth <= 0)
+            StartCoroutine(Die());
+
 
     }
 }

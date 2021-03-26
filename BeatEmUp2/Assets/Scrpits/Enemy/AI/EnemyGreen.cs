@@ -143,7 +143,7 @@ public class EnemyGreen : MonoBehaviour
     public IEnumerator Die()
     {
         //play sound
-        player.GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Enemy Death", false);
+        playerGB.GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Enemy Death", false);
 
         //instantiate death FX
         Instantiate(deathFX, transform.position, Quaternion.identity);

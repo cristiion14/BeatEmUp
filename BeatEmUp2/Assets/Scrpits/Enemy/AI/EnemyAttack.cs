@@ -12,7 +12,6 @@ public class EnemyAttack : MonoBehaviour
 
    public bool attackPlayer, followPlayer;
 
-    
    public void Attack()
     {
         //if the player isn't supposed to be hit, exit function
@@ -27,9 +26,11 @@ public class EnemyAttack : MonoBehaviour
             enemyAnim.EnemyAttack(Random.Range(0, 3));
             currentAttackTime = 0f;
 
-            GetComponent<EnemyGreen>().player.GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Hit", false);
+             GetComponent<EnemyGreen>().playerGB.GetComponent<Player>().gm.GetComponent<AudioManager>().Play("Hit", false);
         }
 
+
+        //consider changing this for optimization
         if (Vector3.Distance(transform.position, GetComponentInParent<EnemyGreen>().playerGB.transform.position)>attackDistance+chasePlayerAfterAttack)
         {
             attackPlayer = false;

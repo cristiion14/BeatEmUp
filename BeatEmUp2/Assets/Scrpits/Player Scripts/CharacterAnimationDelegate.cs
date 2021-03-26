@@ -47,6 +47,7 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     void rightKickAttackON()
     {
+        Debug.LogError("SHOULD TURN IT ON");
         rightKickAttackPoint.SetActive(true);
     }
 

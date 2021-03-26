@@ -8,7 +8,7 @@ public class Attacking : State<EnemyGreen>
 
     public override void Execute(EnemyGreen agent)
     {
-        agent.GetComponentInChildren<EnemyAttack>().Attack();
+        agent.GetComponent<EnemyAttack>().Attack();
 
         agent.enemyAnim.EnemyWalk(false);
 
@@ -16,9 +16,12 @@ public class Attacking : State<EnemyGreen>
         agent.agent.stoppingDistance = .5f;
         agent.agent.autoBraking = true;
 
-        if (agent.GetComponentInChildren<EnemyAttack>().followPlayer)
+        if (agent.GetComponent<EnemyAttack>().followPlayer)
             agent.ChangeState(new Chase());
 
+
+        if (agent.GetComponent<EnemyGreen>().playerGB.GetComponent<Player>().GetCurrentHealth() <= 0)
+            agent.ChangeState(new IdleState());
 
       //  if (agent.GetCurrentHealth() <= 0)
         //    agent.ChangeState(new DeathState());

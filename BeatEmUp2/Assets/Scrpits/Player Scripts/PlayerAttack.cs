@@ -110,7 +110,7 @@ public class PlayerAttack : MonoBehaviour
             //   ComboReset();
         }
 
-        GetComponentInParent<Player>().gm.GetComponent<GM>().comboCounterTXT.text = comboCounter.ToString() +" \n    "+ comboResetTimer.ToString();
+        GetComponentInParent<Player>().gm.GetComponent<GM>().comboCounterTXT.text = comboCounter.ToString(); //+" \n    "+ comboResetTimer.ToString();
 
 
         //  Defend();

@@ -135,6 +135,7 @@ public class CharacterAnimation : MonoBehaviour {
         anim.SetTrigger(AnimationTags.HIT_TRIGGER);
     }
 
+
     public void Death()
     {
         anim.SetTrigger(AnimationTags.DEATH_TRIGGER);

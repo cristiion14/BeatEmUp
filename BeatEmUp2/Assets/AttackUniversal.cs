@@ -72,7 +72,7 @@ public class AttackUniversal : MonoBehaviour
                 GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter++;
                 GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboResetTimer = 3;
                 GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().resetComboCounter = false;
-
+                GM.GetComponent<AudioManager>().Play("Hit", false);
 
                 //                Debug.LogError("combo counter: " + GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter);
                 //comboCounter++;
@@ -125,20 +125,23 @@ public class AttackUniversal : MonoBehaviour
 
 
                     //instantiate hit fx
-                    Instantiate(hitFXPrefab, hitFXPos, Quaternion.identity);
+                    Instantiate(GetComponentInParent<PlayerAttack>().hitEffect, hitFXPos, Quaternion.identity);
 
                     //play the hit animation on the enemy
                     colliders[0].gameObject.GetComponent<EnemyGreen>().enemyAnim.Hit();
-                
 
+
+                //deactivate the gameobject
+                gameObject.SetActive(false);
             }
+            /*
             else if(is_Player && colliders[0].gameObject.name != "EnemyRig" && GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter >0)
             {
                 Debug.LogError("CRINGEEEEEEEEE");
                // GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().resetComboCounter = true;
                // canIncreaseCombo = false;
             }
-
+            */
 
             //Enemy Attack
             if (is_Enemy)
@@ -188,14 +191,15 @@ public class AttackUniversal : MonoBehaviour
 
                 //instantiate hit fx
                 Instantiate(hitFXPrefab, hitFXPos, Quaternion.identity);
+
+
+                //deactivate the gameobject
+                gameObject.SetActive(false);
             }
 
-            
 
-
-
-            //deactivate the gameobject
-            gameObject.SetActive(false);
         }
+
     }
+
 }
