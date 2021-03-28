@@ -42,10 +42,13 @@ public class PlayerRBMovement : MonoBehaviour
             _body.AddForce(dashVelocity, ForceMode.VelocityChange);
         }
 
-        Debug.LogError("THE VERTICAL AXIS: "+Input.GetAxisRaw(Axis.VERTICAL_AXIS) + " \n" + "THE H Axis: "+Input.GetAxisRaw(Axis.HORIZONTAL_AXIS));
+      //  if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        //    GetComponentInParent<Player>().gm.GetComponent<AudioManager>().Play("Step", true);
 
         if (Input.GetAxisRaw(Axis.HORIZONTAL_AXIS) > 0)
+        {
             GetComponent<PlayerAttack>().playerAnim.Walk(true);
+        }
 
         if (Input.GetAxisRaw(Axis.HORIZONTAL_AXIS)<0)
             GetComponent<PlayerAttack>().playerAnim.Walk(true);

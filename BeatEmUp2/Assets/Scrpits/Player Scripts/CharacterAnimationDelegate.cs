@@ -6,6 +6,7 @@ public class CharacterAnimationDelegate : MonoBehaviour
 {
     // This class activates the attack points for collision detection of hits between the player and enemy
 
+    public GameObject GM;
 
     public GameObject leftArmAttackPoint, rightArmAttackPoint, leftKickAttackPoint, rightKickAttackPoint;
 
@@ -56,6 +57,47 @@ public class CharacterAnimationDelegate : MonoBehaviour
         if (rightKickAttackPoint.activeInHierarchy)
             rightKickAttackPoint.SetActive(false);
     }
+
+
+    void PlayStepSoundR()
+    {
+        GM.GetComponent<AudioManager>().Play("Steps2", true);
+    }
+
+    void PlayStepSound()
+    {
+        /*
+        float nr = Random.Range(1,4);
+
+        switch(nr)
+        {
+            case 1:
+                {
+                    GM.GetComponent<AudioManager>().Play("Steps1", true);
+                    break;
+                }
+            case 2:
+                {
+                    GM.GetComponent<AudioManager>().Play("Steps2", true);
+                    break;
+                }
+            case 3:
+                {
+                    GM.GetComponent<AudioManager>().Play("Steps3", true);
+                    break;
+                }
+            case 4:
+                {
+                    GM.GetComponent<AudioManager>().Play("Steps4", true);
+                    break;
+                }
+        }
+        */
+        GM.GetComponent<AudioManager>().Play("Steps1", true);
+        Debug.LogError("A INTRAT!");
+    }
+
+    
     #endregion
 
     #region Turn on attack points for enemy
