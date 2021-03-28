@@ -43,9 +43,8 @@ public class Player : MonoBehaviour
         UpdateHealthAndShield();
 
 
-
-        Mathf.Clamp(currentHealth, 0, maxHealth);
-        Mathf.Clamp(currentShield, 0, maxShield);
+      currentHealth =  Mathf.Clamp(currentHealth, 0, maxHealth);
+      currentShield =  Mathf.Clamp(currentShield, 0, maxShield);
 
         //activate/deactivate healing animation
         //heal player
@@ -53,7 +52,7 @@ public class Player : MonoBehaviour
         {
             GetComponentInChildren<CharacterAnimation>().Smoke(true);
 
-       
+                //Healing
 
             if (currentHealth >= 0 && currentShield <= 0 && currentHealth <= maxHealth)
                 currentHealth += .25f;

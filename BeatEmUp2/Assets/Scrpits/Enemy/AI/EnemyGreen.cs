@@ -83,7 +83,7 @@ public class EnemyGreen : MonoBehaviour
 
     void EnemyInitialize()
     {
-     //   GetComponent<Collider>().enabled = true;
+        GetComponent<Collider>().enabled = true;
 
 
         enemyAnim.Play_IddleAnim();
