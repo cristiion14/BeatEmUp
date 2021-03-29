@@ -150,6 +150,19 @@ public class CharacterAnimationDelegate : MonoBehaviour
             enemyRightKickAttackPoint.SetActive(false);
     }
 
+    void EnemyStepSoundL()
+    {
+        Debug.LogError("HAIDEEE");
+        GM.GetComponent<AudioManager>().Play("EnemySteps1", true, true) ;
+
+
+    }
+
+    void EnemyStepSoundR()
+    {
+        GM.GetComponent<AudioManager>().Play("EnemySteps2", true, true);
+
+    }
 
     #endregion
 
