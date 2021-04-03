@@ -34,7 +34,8 @@ public class AnimationTags : MonoBehaviour {
     public const string HIT = "Hit";
 
     public const string CAN_SMOKE = "CanSmoke";
-
+    public const string CROWBAR = "Croy";
+    public const string PICKUP_OBJ = "PickUPOBJ";
 }
 
 public class Axis
@@ -65,6 +66,7 @@ public class Tags
     public const string PRight_Kick = "RightKick";
 
 
+    
 
 }
 

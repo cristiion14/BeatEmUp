@@ -53,7 +53,6 @@ public class AttackUniversal : MonoBehaviour
         {
             
             GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().resetComboCounter = true;
-            Debug.LogError("0 Colliders");
             
         }
 
@@ -172,6 +171,10 @@ public class AttackUniversal : MonoBehaviour
                       //  }
 
                 }
+
+                //play hit sound
+                GM.GetComponent<AudioManager>().Play("Hit", false);
+
 
                 //play hit animation on player
                 colliders[0].gameObject.GetComponentInParent<CharacterAnimation>().HitPlayer();

@@ -84,6 +84,16 @@ public class CharacterAnimation : MonoBehaviour {
 
     }
 
+    public void CrowbarHit()
+    {
+        anim.SetTrigger(AnimationTags.CROWBAR);
+    }
+
+    public void PickUPOBJ()
+    {
+        anim.SetTrigger(AnimationTags.PICKUP_OBJ);
+    }
+
     #endregion
 
     #region Enemy Animations

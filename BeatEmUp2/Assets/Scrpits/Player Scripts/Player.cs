@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
+
+    //other vars
+    public bool canPickUPOBJ = false;
+
     //health values
     private float initialHealth = 100f, currentHealth, maxHealth = 100f;
 
@@ -64,11 +68,17 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
             gm.GetComponent<AudioManager>().Play("Healing", true);
 
-
+        
         if (Input.GetKeyUp(KeyCode.E))
         {
             GetComponentInChildren<CharacterAnimation>().Smoke(false);
             gm.GetComponent<AudioManager>().Stop("Healing");
+        }
+
+        if(Input.GetKeyDown(KeyCode.P) && canPickUPOBJ)
+        {
+            GetComponentInChildren<CharacterAnimation>().PickUPOBJ();
+            canPickUPOBJ = false;
         }
 
     }

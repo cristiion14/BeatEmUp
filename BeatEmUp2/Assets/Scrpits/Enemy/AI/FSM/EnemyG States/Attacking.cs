@@ -26,7 +26,7 @@ public class Attacking : State<EnemyGreen>
       //  if (agent.GetCurrentHealth() <= 0)
         //    agent.ChangeState(new DeathState());
 
-        Debug.LogError("Attacking!");
+//        Debug.LogError("Attacking!");
 
     }
   

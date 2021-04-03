@@ -12,6 +12,10 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     public GameObject enemyLeftArmAttackPoint, enemyRightArmAttackPoint, enemyLeftKickAttackPoint, enemyRightKickAttackPoint;
 
+    public GameObject objetHolder, crowbar;
+
+    Vector3 crobarSnapLocation = new Vector3(0.302f, 1.569f, 0.427f);
+
     #region Turn on the attack points for player
     void LeftArmAttackON()
     {
@@ -48,7 +52,7 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     void rightKickAttackON()
     {
-        Debug.LogError("SHOULD TURN IT ON");
+
         rightKickAttackPoint.SetActive(true);
     }
 
@@ -58,6 +62,13 @@ public class CharacterAnimationDelegate : MonoBehaviour
             rightKickAttackPoint.SetActive(false);
     }
 
+    void AttackCrowbar()
+    {
+        crowbar.transform.SetParent(objetHolder.transform);
+        crowbar.transform.position = objetHolder.transform.position;
+        crowbar.transform.localEulerAngles = new Vector3(-90f, 4.7f, 0f);
+        
+    }
 
     void PlayStepSoundR()
     {
@@ -94,7 +105,7 @@ public class CharacterAnimationDelegate : MonoBehaviour
         }
         */
         GM.GetComponent<AudioManager>().Play("Steps1", true);
-        Debug.LogError("A INTRAT!");
+
     }
 
     
@@ -152,7 +163,7 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     void EnemyStepSoundL()
     {
-        Debug.LogError("HAIDEEE");
+
         GM.GetComponent<AudioManager>().Play("EnemySteps1", true, true) ;
 
 
