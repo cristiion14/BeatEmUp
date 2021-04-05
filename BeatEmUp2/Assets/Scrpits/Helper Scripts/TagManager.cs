@@ -34,7 +34,9 @@ public class AnimationTags : MonoBehaviour {
     public const string HIT = "Hit";
 
     public const string CAN_SMOKE = "CanSmoke";
-    public const string CROWBAR = "Croy";
+    public const string CROWBAR_1 = "Crowbar1";
+    public const string CROWBAR_2 = "Crowbar2";
+    public const string CROWBAR_3 = "Crowbar3";
     public const string PICKUP_OBJ = "PickUPOBJ";
 }
 

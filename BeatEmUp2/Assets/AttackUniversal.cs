@@ -47,8 +47,11 @@ public class AttackUniversal : MonoBehaviour
 
     void DetectCollision()
     {
+        //fetch the colliders touched by the attacking points
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, collisionLayer);
 
+
+        //combo reset if it doesn't touch nothing
        if(colliders.Length <= 0 && GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter>0)
         {
             
@@ -57,6 +60,7 @@ public class AttackUniversal : MonoBehaviour
         }
 
 
+       //see if touched anything
         if (colliders.Length > 0)
         {
             
@@ -68,8 +72,8 @@ public class AttackUniversal : MonoBehaviour
                     Debug.Log("The collider is: " + this.name);
                     Debug.Log("And has hit the " + colliders[0].name);
 
-                GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter++;
-                GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboResetTimer = 3;
+                GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter++;                   //increase combo counter
+                GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboResetTimer = 3;              //set the timer;
                 GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().resetComboCounter = false;
                 GM.GetComponent<AudioManager>().Play("Hit", false);
 

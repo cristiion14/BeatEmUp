@@ -62,11 +62,20 @@ public class CharacterAnimationDelegate : MonoBehaviour
             rightKickAttackPoint.SetActive(false);
     }
 
-    void AttackCrowbar()
+    void AttachCrowbar()
     {
+        //set the position and rotation of the crowbar
         crowbar.transform.SetParent(objetHolder.transform);
         crowbar.transform.position = objetHolder.transform.position;
         crowbar.transform.localEulerAngles = new Vector3(-90f, 4.7f, 0f);
+
+        //edit rigid body
+        crowbar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        crowbar.GetComponent<Rigidbody>().useGravity = false;
+        crowbar.GetComponent<Rigidbody>().isKinematic = true;
+
+        //deactivate normal attacks
+        GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().holdingObject = true;
         
     }
 

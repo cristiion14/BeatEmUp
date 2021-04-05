@@ -11,6 +11,14 @@ public enum ComboState
     KICK_1,
     KICK_2
 }
+
+public enum CrowbarComboState
+{
+    NONE,
+    Hit_1,
+    Hit_2,
+    Hit_3,
+}
 public class PlayerAttack : MonoBehaviour
 {
     PlayerControlls playerControls;
@@ -44,6 +52,20 @@ public class PlayerAttack : MonoBehaviour
     ComboState currentComboState;
     // Use this for initialization
 
+    //crowbar vars
+    public  bool holdingObject = false;
+    bool holdingObjectAttack = false;
+    bool hasPressedAttackObjUp = false;
+    
+    CrowbarComboState crowbarComboState;
+    bool crowbarActivateTimerToReset = false;
+    float crowbarAttackTimer = 2f;
+    float CrowbarComboResetTimer = 3f;
+    float CrowbarDefaultComboTimer = .4f;
+    float crowbarCurrentComboTimer;
+
+
+
 
     void Awake()
     {
@@ -64,17 +86,37 @@ public class PlayerAttack : MonoBehaviour
     {
         currentComboTimer = defaultComboTimer;
         currentComboState = ComboState.NONE;
+
+        crowbarCurrentComboTimer = CrowbarDefaultComboTimer;
+        crowbarComboState = CrowbarComboState.NONE;
     }
 
     // Update is called once per frame
     void Update()
     {
-        AnimatePlayerAttack();
+        if (!holdingObject)
+            AnimatePlayerAttack();
+        else
+        {
+            //call the crowbar attack function
+            CrowbarAttack();
+
+            //drop item
+            if(Input.GetKeyDown(KeyCode.P))
+            {
+                holdingObject = false;
+                GetComponentInChildren<CharacterAnimationDelegate>().crowbar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                GetComponentInChildren<CharacterAnimationDelegate>().crowbar.GetComponent<Rigidbody>().useGravity = true;
+                GetComponentInChildren<CharacterAnimationDelegate>().crowbar.GetComponent<Rigidbody>().isKinematic = false;
+
+                GetComponentInChildren<CharacterAnimationDelegate>().crowbar.transform.SetParent(null);
+            }
+        }
         ResetComboState();
 
 
 
-        if (isPunching || isKicking)
+        if (isPunching || isKicking || holdingObjectAttack)
         {
              // GetComponentInParent<PlayerMovement>().enemy.canMove = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
@@ -84,7 +126,7 @@ public class PlayerAttack : MonoBehaviour
 
 
 
-        else if (!isPunching && !isKicking)
+        else if (!isPunching && !isKicking && !holdingObjectAttack)
         {
             // movement constraints reset
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -115,6 +157,73 @@ public class PlayerAttack : MonoBehaviour
 
         //  Defend();
     }
+
+    void CrowbarAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        { 
+            crowbarAttackTimer = 2f;
+            
+            if(crowbarComboState == CrowbarComboState.Hit_3)
+            {
+                crowbarAttackTimer -= Time.deltaTime;
+                if (crowbarAttackTimer <= 1.5f)
+                {
+                    crowbarComboState = CrowbarComboState.NONE;
+                    holdingObjectAttack = false;
+                }
+                return;
+                    
+            }
+            
+            Debug.LogError(crowbarComboState);
+
+            crowbarComboState++;
+            crowbarActivateTimerToReset = true;
+            crowbarCurrentComboTimer = CrowbarDefaultComboTimer;
+
+            switch (crowbarComboState)
+            {
+                case CrowbarComboState.Hit_1:
+                    {
+                        holdingObjectAttack = true;
+                        playerAnim.CrowbarHit1();
+                        break;
+                    }
+
+                case CrowbarComboState.Hit_2:
+                    {
+                        holdingObjectAttack = true;
+                        playerAnim.CrowbarHit2();
+                        break;
+                    }
+
+                case CrowbarComboState.Hit_3:
+                    {
+                        holdingObjectAttack = true;
+                        playerAnim.CrowbarHit3();
+                        break;
+                    }
+            
+            }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            hasPressedAttackObjUp = true;
+            holdingObjectAttack = false;
+        }
+
+        if(hasPressedAttackObjUp)
+        {
+            crowbarAttackTimer -= Time.deltaTime;
+            if (crowbarAttackTimer <= 1.5f)
+                crowbarComboState = CrowbarComboState.NONE;
+        }
+    }
+
+    #region Controller Function
     void ComboReset()
     {
         //combo reset
@@ -242,10 +351,14 @@ public class PlayerAttack : MonoBehaviour
             playerAnim.Defend();
     }
 
+    #endregion
+
+
     void AnimatePlayerAttack()
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
+            Debug.LogError("Normal Combo state: " + currentComboState);
             punchAttackTimer = 2;
             hasPressedPunchKeyUp = false;
             if (currentComboState == ComboState.PUNCH_3 || currentComboState == ComboState.KICK_1 || currentComboState == ComboState.KICK_2)

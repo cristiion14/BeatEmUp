@@ -84,9 +84,18 @@ public class CharacterAnimation : MonoBehaviour {
 
     }
 
-    public void CrowbarHit()
+    public void CrowbarHit1()
     {
-        anim.SetTrigger(AnimationTags.CROWBAR);
+        anim.SetTrigger(AnimationTags.CROWBAR_1);
+    }
+
+    public void CrowbarHit2()
+    {
+        anim.SetTrigger(AnimationTags.CROWBAR_2);
+    }
+    public void CrowbarHit3()
+    {
+        anim.SetTrigger(AnimationTags.CROWBAR_3);
     }
 
     public void PickUPOBJ()
