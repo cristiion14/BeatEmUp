@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CharacterAnimationDelegate : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     Vector3 crobarSnapLocation = new Vector3(0.302f, 1.569f, 0.427f);
 
-    #region Turn on the attack points for player
+    #region Player
     void LeftArmAttackON()
     {
         leftArmAttackPoint.SetActive(true);
@@ -117,10 +118,18 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     }
 
+    void ShowGroundPunchFX()
+    {
+        GetComponentInParent<PlayerAttack>().ShowDustEffectLand();
+    }
     
+    void CameraShake()
+    {
+        CinemachineShakeCam.Instance.ShakeCamera(6, .25f);
+    }
     #endregion
 
-    #region Turn on attack points for enemy
+    #region Enemy
 
     void EnemyLHAttackPointON()
     {

@@ -27,8 +27,8 @@ public class PlayerRBMovement : MonoBehaviour
 
 
         _inputs = Vector3.zero;
-        _inputs.x = -Input.GetAxis("Horizontal");
-        _inputs.z = -Input.GetAxis("Vertical");
+        _inputs.x = Input.GetAxisRaw("Horizontal");
+        _inputs.z = Input.GetAxisRaw("Vertical");
         if (_inputs != Vector3.zero)
             transform.forward = _inputs;
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
+
 public enum ComboState
 {
     NONE,
@@ -27,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
     public bool isPunching = false;
     public bool isKicking = false;
 
-    bool leftPunchHit = false;
+   public bool leftPunchHit = false;
     bool rightKickHit = false;
     public Transform leftPunch;
     public Transform rightKick;
@@ -61,11 +63,14 @@ public class PlayerAttack : MonoBehaviour
     bool crowbarActivateTimerToReset = false;
     float crowbarAttackTimer = 2f;
     float CrowbarComboResetTimer = 3f;
-    float CrowbarDefaultComboTimer = .4f;
+    float CrowbarDefaultComboTimer = 1f;
     float crowbarCurrentComboTimer;
 
+    //for camera shaking
+    public CinemachineVirtualCamera shakeCam;
 
-
+    //FXs
+    public GameObject groundPunchFX;
 
     void Awake()
     {
@@ -114,7 +119,7 @@ public class PlayerAttack : MonoBehaviour
         }
         ResetComboState();
 
-
+        ResetCrowbarComboState();
 
         if (isPunching || isKicking || holdingObjectAttack)
         {
@@ -162,7 +167,10 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         { 
-            crowbarAttackTimer = 2f;
+            crowbarAttackTimer = 3f;
+
+
+            Debug.LogError("THE timer is: " + crowbarAttackTimer);
             
             if(crowbarComboState == CrowbarComboState.Hit_3)
             {
@@ -176,6 +184,7 @@ public class PlayerAttack : MonoBehaviour
                     
             }
             
+
             Debug.LogError(crowbarComboState);
 
             crowbarComboState++;
@@ -209,6 +218,7 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
+        
         if (Input.GetKeyUp(KeyCode.J))
         {
             hasPressedAttackObjUp = true;
@@ -220,7 +230,10 @@ public class PlayerAttack : MonoBehaviour
             crowbarAttackTimer -= Time.deltaTime;
             if (crowbarAttackTimer <= 1.5f)
                 crowbarComboState = CrowbarComboState.NONE;
+
+            hasPressedAttackObjUp = false;
         }
+        
     }
 
     #region Controller Function
@@ -411,6 +424,8 @@ public class PlayerAttack : MonoBehaviour
             leftPunchHit = true;
             rightKickHit = false;
             playerAnim.GroundPunch();
+
+            
         }
 
         //Ground Kick
@@ -479,6 +494,19 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    void ResetCrowbarComboState()
+    {
+        if (crowbarActivateTimerToReset)
+            crowbarCurrentComboTimer -= Time.deltaTime;
+        if(crowbarCurrentComboTimer <=0)
+        {
+            //ran out of time
+            crowbarComboState = CrowbarComboState.NONE;
+            crowbarActivateTimerToReset = false;
+            crowbarCurrentComboTimer = CrowbarDefaultComboTimer;
+        }
+    }
+
     void ResetComboState()
     {
         if (activateTimerToReset)
@@ -494,7 +522,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void ShowDustEffectLand()
+  public  void ShowDustEffectLand()
     {
         if (leftPunchHit)
             Instantiate(dustEffectLand, leftPunch);
