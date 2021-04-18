@@ -3064,7 +3064,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9028697, y: 1}
+    m_SensorSize: {x: 1.8653421, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3563,7 +3563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 1
+  m_AmplitudeGain: 0
   m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1408312382
@@ -5349,9 +5349,15 @@ PrefabInstance:
       objectReference: {fileID: 1357131333}
     - target: {fileID: 8774695625590183794, guid: 8a54e474be631bc4d8473b437ee307d3,
         type: 3}
+      propertyPath: groundKickFX
+      value: 
+      objectReference: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3,
+        type: 3}
+    - target: {fileID: 8774695625590183794, guid: 8a54e474be631bc4d8473b437ee307d3,
+        type: 3}
       propertyPath: groundPunchFX
       value: 
-      objectReference: {fileID: 100000, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
+      objectReference: {fileID: 100008, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
     - target: {fileID: 8774695625590183794, guid: 8a54e474be631bc4d8473b437ee307d3,
         type: 3}
       propertyPath: CinemachineFreeLook

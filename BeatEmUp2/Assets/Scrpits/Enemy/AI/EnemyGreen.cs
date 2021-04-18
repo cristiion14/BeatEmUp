@@ -124,6 +124,7 @@ public class EnemyGreen : MonoBehaviour
 
     public void TakeDMG(float amount)
     {
+
         //take damage first from the shield
         if (shield > 0)
             shield -= amount;

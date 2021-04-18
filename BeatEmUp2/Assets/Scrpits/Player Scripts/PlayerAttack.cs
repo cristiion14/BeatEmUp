@@ -21,6 +21,7 @@ public enum CrowbarComboState
     Hit_2,
     Hit_3,
 }
+
 public class PlayerAttack : MonoBehaviour
 {
     PlayerControlls playerControls;
@@ -56,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
 
     //crowbar vars
     public  bool holdingObject = false;
-    bool holdingObjectAttack = false;
+   public bool holdingObjectAttack = false;
     bool hasPressedAttackObjUp = false;
     
     CrowbarComboState crowbarComboState;
@@ -71,6 +72,7 @@ public class PlayerAttack : MonoBehaviour
 
     //FXs
     public GameObject groundPunchFX;
+    public GameObject groundKickFX;
 
     void Awake()
     {
@@ -425,6 +427,8 @@ public class PlayerAttack : MonoBehaviour
             rightKickHit = false;
             playerAnim.GroundPunch();
 
+         
+
             
         }
 
@@ -521,16 +525,20 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-
-  public  void ShowDustEffectLand()
+    public void InstantiateGroundKickFX()
     {
-        if (leftPunchHit)
-            Instantiate(dustEffectLand, leftPunch);
-        else
-            Instantiate(dustEffectLand, rightKick);
-            
+        if (rightKickHit)
+            Instantiate(groundKickFX, rightKick);
+    
+
     }
 
-  
+    public  void InstantiateGroundPunchFX()
+    {
+        if (leftPunchHit)
+            Instantiate(groundPunchFX, leftPunch);
+
+            
+    }
 }
 

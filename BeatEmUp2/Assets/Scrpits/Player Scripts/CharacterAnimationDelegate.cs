@@ -120,12 +120,62 @@ public class CharacterAnimationDelegate : MonoBehaviour
 
     void ShowGroundPunchFX()
     {
-        GetComponentInParent<PlayerAttack>().ShowDustEffectLand();
+        GetComponentInParent<PlayerAttack>().InstantiateGroundPunchFX();
     }
-    
+
+    void ShowGroundKickFX()
+    {
+        GetComponentInParent<PlayerAttack>().InstantiateGroundKickFX();
+
+    }
+
+    void Check4KickHit()
+    {
+        //check to see what was hit
+        Collider[] hitObj = Physics.OverlapSphere(GetComponentInParent<PlayerAttack>().rightKick.transform.position, 3f);
+
+        if (hitObj.Length > 0)
+        {
+            foreach (Collider obj in hitObj)
+            {
+                if (obj.GetComponentInParent<EnemyGreen>() != null)
+                {
+                    //enemy was hit
+                    //take dmg
+                    obj.GetComponentInParent<EnemyGreen>().TakeDMG(40);
+
+                    //play hit animation
+                    obj.GetComponentInParent<EnemyGreen>().enemyAnim.Hit();
+                }
+            }
+        }
+    }
+
+    void Check4PunchHit()
+    {
+        //check to see what was hit
+        Collider[] hitObj = Physics.OverlapSphere(GetComponentInParent<PlayerAttack>().leftPunch.transform.position, 1f);
+
+        if (hitObj.Length > 0)
+        {
+            foreach (Collider obj in hitObj)
+            {
+                if (obj.GetComponentInParent<EnemyGreen>() != null)
+                {
+                    //enemy was hit
+                    //take dmg
+                    obj.GetComponentInParent<EnemyGreen>().TakeDMG(40);
+
+                    //play hit animation
+                    obj.GetComponentInParent<EnemyGreen>().enemyAnim.Hit();
+                }
+            }
+        }
+    }
+
     void CameraShake()
     {
-        CinemachineShakeCam.Instance.ShakeCamera(6, .25f);
+        CinemachineShakeCam.Instance.ShakeCamera(10, .25f);
     }
     #endregion
 

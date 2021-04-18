@@ -8,7 +8,41 @@ public class ThirdPersonMovement : MonoBehaviour
     public float speed = 6f;
     public float turnSmoothTime = .1f;
     float turnSmoothVelocity;
+    PlayerAttack playerAttack;
+
+    bool canMove = true;
+
+    private void Start()
+    {
+        //reference to player attack script
+        playerAttack = GetComponent<PlayerAttack>();
+    }
     private void Update()
+    {
+
+        if (playerAttack.isPunching ||playerAttack.isKicking || playerAttack.holdingObjectAttack)
+        {
+            //player is attacking so he shouldn't be able to move
+            //restrain movement of player
+            canMove = false;
+
+        }
+
+        else if (!playerAttack.isPunching && !playerAttack.isKicking && !playerAttack.holdingObjectAttack)
+        {
+           
+            //player is not attacking
+            //player can move
+            canMove = true;
+
+        }
+
+        if (canMove)
+            Movement();
+        
+    }
+
+    void Movement()
     {
         float x = -Input.GetAxisRaw(Axis.HORIZONTAL_AXIS);
         float z = -Input.GetAxisRaw(Axis.VERTICAL_AXIS);
@@ -16,9 +50,9 @@ public class ThirdPersonMovement : MonoBehaviour
         Vector3 direction = new Vector3(x, 0, z).normalized;
 
         //if wants to move
-        if(direction.magnitude >= .1f)
+        if (direction.magnitude >= .1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) *Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
@@ -29,6 +63,5 @@ public class ThirdPersonMovement : MonoBehaviour
             GetComponentInChildren<CharacterAnimation>().Walk(true);
         else
             GetComponentInChildren<CharacterAnimation>().Walk(false);
-
     }
 }
