@@ -24,6 +24,8 @@ public enum CrowbarComboState
 
 public class PlayerAttack : MonoBehaviour
 {
+   public float damage = 10f;
+
     PlayerControlls playerControls;
 
     public GameObject hitEffect;
@@ -32,8 +34,12 @@ public class PlayerAttack : MonoBehaviour
 
    public bool leftPunchHit = false;
     bool rightKickHit = false;
+
     public Transform leftPunch;
+    public Transform rightPunch;
     public Transform rightKick;
+
+
    public GameObject dustEffectLand;
 
     float punchAttackTimer = 2f;
@@ -70,10 +76,19 @@ public class PlayerAttack : MonoBehaviour
     //for camera shaking
     public CinemachineVirtualCamera shakeCam;
 
+    //fire fist 
+    float fireFistStamina = 100f;
+    public GameObject fireFistHolderL;
+    public GameObject fireFistHolderR;
+
     //FXs
     public GameObject groundPunchFX;
     public GameObject groundKickFX;
+    public GameObject fireFistFX;
+    //special modes
 
+    //when true, the player gains fire fists
+   public bool fireFists = false;         
     void Awake()
     {
         //reference to the controller
@@ -159,6 +174,7 @@ public class PlayerAttack : MonoBehaviour
             //   ComboReset();
         }
 
+        //Display combo counter
         GetComponentInParent<Player>().gm.GetComponent<GM>().comboCounterTXT.text = comboCounter.ToString(); //+" \n    "+ comboResetTimer.ToString();
 
 
@@ -368,9 +384,68 @@ public class PlayerAttack : MonoBehaviour
 
     #endregion
 
-
+    IEnumerator DecreaseStamina()
+    {
+        yield return new WaitForSeconds(6f);
+        fireFistStamina -= 10f;
+        
+    }
     void AnimatePlayerAttack()
     {
+        #region fire fists
+        //activate fire fists
+
+
+        if (Input.GetKeyDown(KeyCode.F) && !fireFists)
+        {
+           
+            //activate the holders
+            fireFistHolderL.SetActive(true);
+            fireFistHolderR.SetActive(true);
+            
+            //attach the fire fxs to the player's fists
+            Instantiate(fireFistFX, leftPunch).transform.SetParent(fireFistHolderL.transform);
+            Instantiate(fireFistFX, rightPunch).transform.SetParent(fireFistHolderR.transform);
+
+            //player now has fire fists
+            fireFists = true;
+
+
+        }
+
+        //deactivate fire fists
+        else  if(Input.GetKeyDown(KeyCode.F) && fireFists)
+        {
+            //deactivate holders
+            fireFistHolderL.SetActive(false);
+            fireFistHolderR.SetActive(false);
+
+            //fire fists off
+            fireFists = false;
+        }
+
+        //increase the damage when fire fists are on
+        if(fireFists)
+        {
+            damage = 50f;
+
+            //decrease stamina
+            StartCoroutine(DecreaseStamina());
+
+            if(fireFistStamina <=0)
+            {
+                //deactivate fire fists
+                fireFistHolderL.SetActive(false);
+                fireFistHolderR.SetActive(false);
+
+                fireFists = false;
+                damage = 10f;
+            }
+
+        }
+        #endregion
+
+        #region normal punch
         if (Input.GetKeyDown(KeyCode.J))
         {
             Debug.LogError("Normal Combo state: " + currentComboState);
@@ -419,6 +494,7 @@ public class PlayerAttack : MonoBehaviour
             if (punchAttackTimer <= 1.5f)
                 isPunching = false;
         }
+        #endregion
 
         //Ground Punch
         if (Input.GetKeyDown(KeyCode.Z))
@@ -426,10 +502,6 @@ public class PlayerAttack : MonoBehaviour
             leftPunchHit = true;
             rightKickHit = false;
             playerAnim.GroundPunch();
-
-         
-
-            
         }
 
         //Ground Kick
@@ -444,6 +516,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
             playerAnim.JumpKick();
 
+        #region normal kick
         if (Input.GetKeyDown(KeyCode.K))
         {
             kickAttackTimer = 2;
@@ -496,6 +569,8 @@ public class PlayerAttack : MonoBehaviour
             if (kickAttackTimer <= 1.5f)
                isKicking = false;
         }
+        #endregion
+
     }
 
     void ResetCrowbarComboState()

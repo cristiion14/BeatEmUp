@@ -14,7 +14,7 @@ public class AttackUniversal : MonoBehaviour
     public bool is_Player, is_Enemy;
 
     public GameObject hitFXPrefab;
-
+    public GameObject smokeFX;
 
 
   public  int comboCounter = 0;
@@ -98,7 +98,7 @@ public class AttackUniversal : MonoBehaviour
                         }
                 }
                 */
-
+                /*
                 if (this.tag == Tags.PLeft_Punch)
                 {
                     Debug.Log("A DAT CU STANGU!");
@@ -108,8 +108,10 @@ public class AttackUniversal : MonoBehaviour
                 {
                     damage = 20;
                 }
-                    colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(damage);
-
+                */
+                    colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().damage);
+                if (GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().fireFists)
+                    Instantiate(hitFXPrefab, colliders[0].bounds.center, Quaternion.identity);
 
                     //find the position to instantiate the effect
                     Vector3 hitFXPos = colliders[0].transform.position;
@@ -128,7 +130,8 @@ public class AttackUniversal : MonoBehaviour
 
 
                     //instantiate hit fx
-                    Instantiate(GetComponentInParent<PlayerAttack>().hitEffect, hitFXPos, Quaternion.identity);
+                    if(!GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().fireFists)
+                        Instantiate(GetComponentInParent<PlayerAttack>().hitEffect, hitFXPos, Quaternion.identity);
 
                     //play the hit animation on the enemy
                     colliders[0].gameObject.GetComponent<EnemyGreen>().enemyAnim.Hit();
