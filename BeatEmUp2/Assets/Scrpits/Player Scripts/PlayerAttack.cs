@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
-
+using TMPro;
 public enum ComboState
 {
     NONE,
@@ -78,6 +78,7 @@ public class PlayerAttack : MonoBehaviour
 
     //fire fist 
     float fireFistStamina = 100f;
+    public TextMeshProUGUI staminaTxT;
     public GameObject fireFistHolderL;
     public GameObject fireFistHolderR;
 
@@ -116,6 +117,9 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (fireFists)
+            staminaTxT.text ="Stamina is: "+ fireFistStamina.ToString();
+
         if (!holdingObject)
             AnimatePlayerAttack();
         else
@@ -384,12 +388,6 @@ public class PlayerAttack : MonoBehaviour
 
     #endregion
 
-    IEnumerator DecreaseStamina()
-    {
-        yield return new WaitForSeconds(6f);
-        fireFistStamina -= 10f;
-        
-    }
     void AnimatePlayerAttack()
     {
         #region fire fists
@@ -410,7 +408,6 @@ public class PlayerAttack : MonoBehaviour
             //player now has fire fists
             fireFists = true;
 
-
         }
 
         //deactivate fire fists
@@ -430,7 +427,7 @@ public class PlayerAttack : MonoBehaviour
             damage = 50f;
 
             //decrease stamina
-            StartCoroutine(DecreaseStamina());
+            fireFistStamina -= 3f * Time.deltaTime;
 
             if(fireFistStamina <=0)
             {

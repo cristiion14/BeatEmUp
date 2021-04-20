@@ -109,7 +109,15 @@ public class AttackUniversal : MonoBehaviour
                     damage = 20;
                 }
                 */
-                    colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().damage);
+
+                //set default damage for kicking even if fire fist is on
+                if (this.tag == Tags.PLeft_Kick || this.tag == Tags.PRight_Kick)
+                    GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().damage = 10f;
+
+                //take dmg
+                colliders[0].gameObject.GetComponent<EnemyGreen>().TakeDMG(GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().damage);
+
+                //instantiate hitFX for fire fists
                 if (GM.GetComponent<GM>().playerGB.GetComponent<PlayerAttack>().fireFists)
                     Instantiate(hitFXPrefab, colliders[0].bounds.center, Quaternion.identity);
 
