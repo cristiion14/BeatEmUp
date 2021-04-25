@@ -5,6 +5,9 @@ using TMPro;
 using Cinemachine;
 public class GM : MonoBehaviour
 {
+    //instance
+    public static GM instance { get; private set; }
+
     public Player player;
     public EnemyGreen enemyGreen;
 
@@ -21,6 +24,17 @@ public class GM : MonoBehaviour
     float playerComboCounter = 0f;
     float playerComboTimer = 2f;
 
+    //side walls
+    public GameObject sideWall;
+    
+    public bool isFighting = false;
+   public bool hasFinishedFight = false;
+   public bool hasInstantiatedWalls = false;
+    List<GameObject> instantiatedSideWals = new List<GameObject>();
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
    //     SpawnEnemy(enemyPrefab, 1);
@@ -28,44 +42,25 @@ public class GM : MonoBehaviour
 
     private void Update()
     {
-
-
-  //      comboCounterTXT.text = playerGB
-
-        /*
-        Debug.Log(playerGB.GetComponentInChildren<AttackUniversal>().canIncreaseCombo);
-
-        if (playerGB.GetComponentInChildren<AttackUniversal>().canIncreaseCombo)
-            playerComboCounter++;
-
-        if(!playerGB.GetComponentInChildren<PlayerAttack>().isPunching && !playerGB.GetComponentInChildren<PlayerAttack>().isKicking)
+        if (isFighting && !hasInstantiatedWalls)
         {
-            playerComboTimer -= Time.deltaTime;
-            if (playerComboTimer <= 0)
+            //turn on side walls
+           instantiatedSideWals.Add(Instantiate(sideWall, new Vector3(playerGB.transform.position.x - 5f, 2, 0), Quaternion.identity));
+           instantiatedSideWals.Add(Instantiate(sideWall, new Vector3(playerGB.transform.position.x + 5f, 2, 0), Quaternion.identity));
+
+            hasFinishedFight = false;
+            hasInstantiatedWalls = true;
+        }
+
+        if(hasFinishedFight && hasInstantiatedWalls)
+        {
+            foreach (GameObject wall in instantiatedSideWals)
             {
-                player.GetComponentInChildren<AttackUniversal>().canIncreaseCombo = false;
-                playerComboTimer = 2;
+                Destroy(wall);
             }
+            hasInstantiatedWalls = false;
+            hasFinishedFight = false;
         }
-
-        */
-        // Timer to spawn enemies
-
-        /*
-
-        timer -= Time.deltaTime;
-
-        if(timer <= 0)
-        {
-            Debug.LogError("INSTANTIATED ENEMY");
-
-            SpawnEnemy(enemyPrefab, enemyNR);
-            timer += 20;
-        }
-
-        */
-
-
     }
 
 

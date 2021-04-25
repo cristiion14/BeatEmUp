@@ -55,6 +55,7 @@ public class EnemyGreen : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
+    public GM gm;
     private void Awake()
     {
         EnemyInitialize();
@@ -165,6 +166,8 @@ public class EnemyGreen : MonoBehaviour
         //set gb to active
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
 
+        GM.instance.hasFinishedFight = true;
+        GM.instance.isFighting = false;
 
         EnemyInitialize();
 

@@ -11,7 +11,7 @@ public class Chase : State<EnemyGreen>
 
         agent.agent.isStopped = false;
 
-        agent.agent.stoppingDistance = .5f;
+        agent.agent.stoppingDistance = 2f;
 
         agent.enemyAnim.EnemyWalk(true);
         agent.agent.SetDestination(agent.playerGB.transform.position);
@@ -21,6 +21,9 @@ public class Chase : State<EnemyGreen>
             agent.GetComponentInChildren<EnemyAttack>().followPlayer = false;
             agent.GetComponentInChildren<EnemyAttack>().attackPlayer = true;
 
+
+            agent.enemyAnim.EnemyWalk(false);
+            //change state to attack
 
             agent.ChangeState(new Attacking());
         }
