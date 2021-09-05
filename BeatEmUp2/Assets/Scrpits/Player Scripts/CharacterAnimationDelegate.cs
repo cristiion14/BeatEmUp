@@ -177,6 +177,15 @@ public class CharacterAnimationDelegate : MonoBehaviour
     {
         CinemachineShakeCam.Instance.ShakeCamera(10, .25f);
     }
+
+    /// <summary>
+    /// Function which makes the player able to move after being hit
+    /// </summary>
+    void ReleaseMovement()
+    {
+        ThirdPersonMovement.instance.playerHit = false;
+    }
+
     #endregion
 
     #region Enemy

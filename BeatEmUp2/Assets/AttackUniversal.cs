@@ -60,6 +60,7 @@ public class AttackUniversal : MonoBehaviour
         }
 
 
+
        //see if touched anything
         if (colliders.Length > 0)
         {
@@ -76,6 +77,11 @@ public class AttackUniversal : MonoBehaviour
                 GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboResetTimer = 3;              //set the timer;
                 GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().resetComboCounter = false;
                 GM.GetComponent<AudioManager>().Play("Hit", false);
+
+                EnemyAttack enemy = GM.GetComponent<GM>().enemyGreen.GetComponent<EnemyAttack>();
+                enemy.canAttack = false;
+
+                
 
                 //                Debug.LogError("combo counter: " + GM.GetComponent<GM>().playerGB.GetComponentInChildren<PlayerAttack>().comboCounter);
                 //comboCounter++;
@@ -194,6 +200,10 @@ public class AttackUniversal : MonoBehaviour
                 //play hit animation on player
                 colliders[0].gameObject.GetComponentInParent<CharacterAnimation>().HitPlayer();
 
+                //freeze the movement when hit
+                ThirdPersonMovement.instance.canMove = false;
+                ThirdPersonMovement.instance.playerHit = true;
+
                 //deal damage to player
                 colliders[0].gameObject.GetComponentInParent<Player>().TakeDMG(damage);
 //                Debug.Log("DAMAGE IS: " + damage);
@@ -216,6 +226,11 @@ public class AttackUniversal : MonoBehaviour
             }
 
 
+        }
+        else
+        {
+              EnemyAttack enemy = GM.GetComponent<GM>().enemyGreen.GetComponent<EnemyAttack>();
+              enemy.canAttack = true;
         }
 
     }

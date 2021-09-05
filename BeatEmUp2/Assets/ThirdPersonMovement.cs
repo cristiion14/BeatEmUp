@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
+    public static ThirdPersonMovement instance { get; private set; }
+
     public CharacterController controller;
     public float speed = 6f;
     public float turnSmoothTime = .1f;
     float turnSmoothVelocity;
     PlayerAttack playerAttack;
 
-    bool canMove = true;
+   public bool canMove = true;
+
+    public bool playerHit = false;
+    private void Awake()
+    {
+
+        instance = this;
+    }
 
     private void Start()
     {
@@ -20,7 +29,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private void Update()
     {
 
-        if (playerAttack.isPunching ||playerAttack.isKicking || playerAttack.holdingObjectAttack)
+        if (playerAttack.isPunching ||playerAttack.isKicking || playerAttack.holdingObjectAttack || playerHit)
         {
             //player is attacking so he shouldn't be able to move
             //restrain movement of player
@@ -28,7 +37,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
 
-        else if (!playerAttack.isPunching && !playerAttack.isKicking && !playerAttack.holdingObjectAttack)
+        else if (!playerAttack.isPunching && !playerAttack.isKicking && !playerAttack.holdingObjectAttack && !playerHit)
         {
            
             //player is not attacking

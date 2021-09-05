@@ -56,6 +56,7 @@ public class EnemyGreen : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer;
 
     public GM gm;
+
     private void Awake()
     {
         EnemyInitialize();
@@ -84,13 +85,23 @@ public class EnemyGreen : MonoBehaviour
 
     void EnemyInitialize()
     {
+
+        //Spawn player to a position based on player's pos
+        transform.position = new Vector3(playerGB.transform.position.x -50.5f, 0, Random.Range(-1, 1));
+
         GetComponent<Collider>().enabled = true;
+
+
+        //set gb to active
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+
+ 
+
 
 
         enemyAnim.Play_IddleAnim();
 
-        //Spawn player to initial position
-        transform.position = initialPos.position;
+
 
         //Set Health
         currentHealth = initialHealth;
@@ -125,6 +136,8 @@ public class EnemyGreen : MonoBehaviour
 
     public void TakeDMG(float amount)
     {
+        //disable the attack of the agent
+        GetComponent<EnemyAttack>().canAttack = false;
 
         //take damage first from the shield
         if (shield > 0)
@@ -158,13 +171,10 @@ public class EnemyGreen : MonoBehaviour
 
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
 
-        yield return new WaitForSeconds(.5f);
+     //   yield return new WaitForSeconds(.5f);
 
         //instantiate revive fx
-        Instantiate(reviveFX, initialPos);
-
-        //set gb to active
-        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        // Instantiate(reviveFX, initialPos);
 
         GM.instance.hasFinishedFight = true;
         GM.instance.isFighting = false;
@@ -172,29 +182,6 @@ public class EnemyGreen : MonoBehaviour
         EnemyInitialize();
 
     }
-
-
-    public void Attack()
-    {
-        //if the player isn't supposed to be hit, exit function
-        if (!attackPlayer)
-            return;
-
-        currentAttackTime += Time.deltaTime;
-
-        if (currentAttackTime > defaultAttackTime)
-        {
-            enemyAnim.EnemyAttack(Random.Range(0, 3));
-            currentAttackTime = 0f;
-        }
-
-        if (Vector3.Distance(transform.position, GetComponent<EnemyGreen>().player.transform.position) > attackDistance + chasePlayerAfterAttack)
-        {
-            attackPlayer = false;
-            followPlayer = true;
-        }
-    }
-
 
     /*
     private void OnCollisionEnter(Collision collision)

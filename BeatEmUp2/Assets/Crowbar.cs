@@ -16,6 +16,7 @@ public class Crowbar : MonoBehaviour
     public GameObject hitFX;
 
     float health = 100f;
+    public Material hitMat;
 
     private void Awake()
     {
@@ -38,6 +39,12 @@ public class Crowbar : MonoBehaviour
         {
             player.GetComponent<PlayerAttack>().holdingObject = false;
             Destroy(gameObject);
+        }
+
+        else if (health >0 && health <=50)
+        {
+            //change the material based on health of the crowbar
+            GetComponent<MeshRenderer>().material = hitMat;
         }
     }
 

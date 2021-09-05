@@ -10,12 +10,14 @@ public class EnemyAttack : MonoBehaviour
     float currentAttackTime;
     float defaultAttackTime = 2f;
 
+    public bool canAttack = true;
+
    public bool attackPlayer, followPlayer;
 
    public void Attack()
     {
         //if the player isn't supposed to be hit, exit function
-        if (!attackPlayer)
+        if (!attackPlayer || !canAttack)
             return;
 
 

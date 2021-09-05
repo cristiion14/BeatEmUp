@@ -159,6 +159,7 @@ public class PlayerAttack : MonoBehaviour
             // GetComponentInChildren<AttackUniversal>().canIncreaseCombo = false;
             resetComboCounter = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            GetComponent<Player>().gm.enemyGreen.GetComponent<EnemyAttack>().canAttack = true;
 
         }
 
@@ -245,6 +246,8 @@ public class PlayerAttack : MonoBehaviour
         {
             hasPressedAttackObjUp = true;
             holdingObjectAttack = false;
+
+            
         }
 
         if(hasPressedAttackObjUp)

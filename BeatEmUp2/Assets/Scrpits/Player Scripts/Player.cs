@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 
     //other vars
     public bool canPickUPOBJ = false;
-
+    
+    
     //health values
     private float initialHealth = 100f, currentHealth, maxHealth = 100f;
 
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     public void SetCurrentShield(float newShield) { currentShield = newShield; }
 
     //UI
+    
     public Image healthBar;
     public Image shieldBar;
 
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
         //Initialize player
         PlayerInitialize();
         gm = GameObject.Find("GM").GetComponent<GM>();
+        
     }
 
     // Update is called once per frame
